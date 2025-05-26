@@ -1,11 +1,14 @@
-# Adaptyvių gilaus mokymosi metodų, skirtų miško sveikatos būklei klasifikuoti iš RGB vaizdų, tyrimai
+# Giliojo mokymosi objektų aptikimo modelių tyrimai pažeistiems medžiams klasifikuoti iš RGB vaizdų
 Baigiamasis magistro studijų projektas
 
 Kauno technologijos universitetas
+
 Informatikos fakultetas
 
 autorius: Henrikas Gricius
+
 vadovas: Prof. Rytis Maskeliūnas
+
 recenzentas: Prof. Tomas Blažauskas
 
 Kaunas, 2025
@@ -14,7 +17,7 @@ Kaunas, 2025
 Projekto tyrimams naudojamas [MMDetection](https://github.com/open-mmlab/mmdetection) objektų aptikimo modelių įrankis [Python 3.9.13](https://www.python.org/downloads/release/python-3913/) aplinkoje.
 Ligotų maumedžių duomenų rinkinys parsisiųstas iš [Forest Damages – Larch Casebearer 1.0](https://lila.science/datasets/forest-damages-larch-casebearer/), o šie duomenys surinkti [National Forest Data Lab](https://skogsdatalabbet.se/) Švedijoje.
 
-### MMDetection instaliacija
+## MMDetection instaliacija
 
 Pirmiausia, paruošiama Python virtuali aplinka
 
