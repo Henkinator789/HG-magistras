@@ -1,0 +1,1365 @@
+2025/05/19 13:48:03 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: win32
+    Python: 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 549609362
+    GPU 0: NVIDIA GeForce RTX 3070 Ti
+    CUDA_HOME: C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6
+    NVCC: Cuda compilation tools, release 12.6, V12.6.85
+    MSVC: Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34433 for x64
+    GCC: n/a
+    PyTorch: 2.1.0+cu118
+    PyTorch compiling details: PyTorch built with:
+  - C++ Version: 199711
+  - MSVC 192930151
+  - Intel(R) Math Kernel Library Version 2020.0.2 Product Build 20200624 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 2019
+  - LAPACK is enabled (usually provided by MKL)
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.7
+  - Magma 2.5.4
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/builder/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /bigobj /FS -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /utf-8 /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=OFF, TORCH_VERSION=2.1.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.0+cu118
+    OpenCV: 4.10.0
+    MMEngine: 0.10.5
+
+Runtime environment:
+    cudnn_benchmark: False
+    dist_cfg: {'backend': 'nccl'}
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    seed: 549609362
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2025/05/19 13:48:03 - mmengine - INFO - Config:
+auto_scale_lr = dict(base_batch_size=16, enable=False)
+backend_args = None
+data_root = 'D:/Repositories/test/data/larch_casebearer/'
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    checkpoint=dict(
+        interval=0, save_best='coco/bbox_mAP', type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='DetVisualizationHook'))
+default_scope = 'mmdet'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+launcher = 'none'
+load_from = None
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+metainfo = dict(
+    classes=(
+        'H',
+        'LD',
+        'HD',
+        'other',
+    ),
+    palette=[
+        (
+            0,
+            255,
+            0,
+        ),
+        (
+            255,
+            128,
+            0,
+        ),
+        (
+            255,
+            0,
+            0,
+        ),
+        (
+            0,
+            0,
+            255,
+        ),
+    ])
+model = dict(
+    backbone=dict(
+        depth=50,
+        frozen_stages=1,
+        init_cfg=dict(checkpoint='torchvision://resnet50', type='Pretrained'),
+        norm_cfg=dict(requires_grad=True, type='BN'),
+        norm_eval=True,
+        num_stages=4,
+        out_indices=(
+            0,
+            1,
+            2,
+            3,
+        ),
+        style='pytorch',
+        type='ResNet'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        pad_size_divisor=32,
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='DetDataPreprocessor'),
+    neck=dict(
+        in_channels=[
+            256,
+            512,
+            1024,
+            2048,
+        ],
+        num_outs=5,
+        out_channels=256,
+        type='FPN'),
+    roi_head=dict(
+        bbox_head=dict(
+            bbox_coder=dict(
+                target_means=[
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                ],
+                target_stds=[
+                    0.1,
+                    0.1,
+                    0.2,
+                    0.2,
+                ],
+                type='DeltaXYWHBBoxCoder'),
+            fc_out_channels=1024,
+            in_channels=256,
+            loss_bbox=dict(loss_weight=1.0, type='L1Loss'),
+            loss_cls=dict(
+                loss_weight=1.0, type='CrossEntropyLoss', use_sigmoid=False),
+            num_classes=4,
+            reg_class_agnostic=False,
+            roi_feat_size=7,
+            type='Shared2FCBBoxHead'),
+        bbox_roi_extractor=dict(
+            featmap_strides=[
+                4,
+                8,
+                16,
+                32,
+            ],
+            out_channels=256,
+            roi_layer=dict(output_size=7, sampling_ratio=0, type='RoIAlign'),
+            type='SingleRoIExtractor'),
+        type='StandardRoIHead'),
+    rpn_head=dict(
+        anchor_generator=dict(
+            ratios=[
+                0.5,
+                1.0,
+                2.0,
+            ],
+            scales=[
+                8,
+            ],
+            strides=[
+                4,
+                8,
+                16,
+                32,
+                64,
+            ],
+            type='AnchorGenerator'),
+        bbox_coder=dict(
+            target_means=[
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+            ],
+            target_stds=[
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+            ],
+            type='DeltaXYWHBBoxCoder'),
+        feat_channels=256,
+        in_channels=256,
+        loss_bbox=dict(loss_weight=1.0, type='L1Loss'),
+        loss_cls=dict(
+            loss_weight=1.0, type='CrossEntropyLoss', use_sigmoid=True),
+        type='RPNHead'),
+    test_cfg=dict(
+        rcnn=dict(
+            max_per_img=100,
+            nms=dict(iou_threshold=0.5, type='nms'),
+            score_thr=0.05),
+        rpn=dict(
+            max_per_img=1000,
+            min_bbox_size=0,
+            nms=dict(iou_threshold=0.7, type='nms'),
+            nms_pre=1000)),
+    train_cfg=dict(
+        rcnn=dict(
+            assigner=dict(
+                ignore_iof_thr=-1,
+                match_low_quality=False,
+                min_pos_iou=0.5,
+                neg_iou_thr=0.5,
+                pos_iou_thr=0.5,
+                type='MaxIoUAssigner'),
+            debug=False,
+            pos_weight=-1,
+            sampler=dict(
+                add_gt_as_proposals=True,
+                neg_pos_ub=-1,
+                num=512,
+                pos_fraction=0.25,
+                type='RandomSampler')),
+        rpn=dict(
+            allowed_border=-1,
+            assigner=dict(
+                ignore_iof_thr=-1,
+                match_low_quality=True,
+                min_pos_iou=0.3,
+                neg_iou_thr=0.3,
+                pos_iou_thr=0.7,
+                type='MaxIoUAssigner'),
+            debug=False,
+            pos_weight=-1,
+            sampler=dict(
+                add_gt_as_proposals=False,
+                neg_pos_ub=-1,
+                num=256,
+                pos_fraction=0.5,
+                type='RandomSampler')),
+        rpn_proposal=dict(
+            max_per_img=1000,
+            min_bbox_size=0,
+            nms=dict(iou_threshold=0.7, type='nms'),
+            nms_pre=2000)),
+    type='FasterRCNN')
+optim_wrapper = dict(
+    optimizer=dict(lr=0.02, momentum=0.9, type='SGD', weight_decay=0.0001),
+    type='OptimWrapper')
+param_scheduler = [
+    dict(
+        begin=0, by_epoch=False, end=500, start_factor=0.001, type='LinearLR'),
+    dict(
+        begin=0,
+        by_epoch=True,
+        end=12,
+        gamma=0.1,
+        milestones=[
+            8,
+            11,
+        ],
+        type='MultiStepLR'),
+]
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='test/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='test/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1333,
+                800,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='D:/Repositories/test/data/larch_casebearer/test/annotations.json',
+    backend_args=None,
+    classwise=True,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+test_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1333,
+        800,
+    ), type='Resize'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+        ),
+        type='PackDetInputs'),
+]
+train_cfg = dict(max_epochs=30, type='EpochBasedTrainLoop', val_interval=1)
+train_dataloader = dict(
+    batch_sampler=dict(type='AspectRatioBatchSampler'),
+    batch_size=4,
+    dataset=dict(
+        ann_file='train/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='train/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        filter_cfg=dict(filter_empty_gt=True, min_size=32),
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(keep_ratio=True, scale=(
+                1333,
+                800,
+            ), type='Resize'),
+            dict(prob=0.5, type='ShearY'),
+            dict(type='PackDetInputs'),
+        ],
+        type='CocoDataset'),
+    num_workers=1,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(keep_ratio=True, scale=(
+        1333,
+        800,
+    ), type='Resize'),
+    dict(prob=0.5, type='ShearY'),
+    dict(type='PackDetInputs'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='val/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='val/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1333,
+                800,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='D:/Repositories/test/data/larch_casebearer/val/annotations.json',
+    backend_args=None,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = '25-05-09/fasterrcnn'
+
+2025/05/19 13:48:04 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2025/05/19 13:48:04 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2025/05/19 13:48:05 - mmengine - INFO - load model from: torchvision://resnet50
+2025/05/19 13:48:05 - mmengine - INFO - Loads checkpoint by torchvision backend from path: torchvision://resnet50
+2025/05/19 13:48:05 - mmengine - WARNING - The model and loaded state dict do not match exactly
+
+unexpected key in source state_dict: fc.weight, fc.bias
+
+Name of parameter - Initialization information
+
+backbone.conv1.weight - torch.Size([64, 3, 7, 7]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.conv1.weight - torch.Size([64, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.conv2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn2.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn2.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.conv3.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn3.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn3.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.downsample.0.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.downsample.1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.downsample.1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.conv1.weight - torch.Size([64, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.conv2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn2.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn2.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.conv3.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn3.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn3.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.conv1.weight - torch.Size([64, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.conv2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn2.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn2.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.conv3.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn3.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn3.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.conv1.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.downsample.0.weight - torch.Size([512, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.downsample.1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.downsample.1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.conv1.weight - torch.Size([128, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.conv1.weight - torch.Size([128, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.conv1.weight - torch.Size([128, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.conv1.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.downsample.0.weight - torch.Size([1024, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.downsample.1.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.downsample.1.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.conv1.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.conv2.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn2.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn2.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.conv3.weight - torch.Size([2048, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn3.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn3.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.downsample.0.weight - torch.Size([2048, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.downsample.1.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.downsample.1.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.conv1.weight - torch.Size([512, 2048, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.conv2.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn2.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn2.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.conv3.weight - torch.Size([2048, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn3.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn3.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.conv1.weight - torch.Size([512, 2048, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.conv2.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn2.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn2.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.conv3.weight - torch.Size([2048, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn3.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn3.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+neck.lateral_convs.0.conv.weight - torch.Size([256, 256, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.0.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of FasterRCNN  
+
+neck.lateral_convs.1.conv.weight - torch.Size([256, 512, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of FasterRCNN  
+
+neck.lateral_convs.2.conv.weight - torch.Size([256, 1024, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.2.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of FasterRCNN  
+
+neck.lateral_convs.3.conv.weight - torch.Size([256, 2048, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.3.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of FasterRCNN  
+
+neck.fpn_convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.0.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of FasterRCNN  
+
+neck.fpn_convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of FasterRCNN  
+
+neck.fpn_convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.2.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of FasterRCNN  
+
+neck.fpn_convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.3.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of FasterRCNN  
+
+rpn_head.rpn_conv.weight - torch.Size([256, 256, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_conv.bias - torch.Size([256]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_cls.weight - torch.Size([3, 256, 1, 1]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_cls.bias - torch.Size([3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_reg.weight - torch.Size([12, 256, 1, 1]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_reg.bias - torch.Size([12]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.fc_cls.weight - torch.Size([5, 1024]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.fc_cls.bias - torch.Size([5]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.fc_reg.weight - torch.Size([16, 1024]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.fc_reg.bias - torch.Size([16]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.shared_fcs.0.weight - torch.Size([1024, 12544]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+roi_head.bbox_head.shared_fcs.0.bias - torch.Size([1024]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+roi_head.bbox_head.shared_fcs.1.weight - torch.Size([1024, 1024]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+roi_head.bbox_head.shared_fcs.1.bias - torch.Size([1024]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+2025/05/19 13:48:05 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2025/05/19 13:48:05 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2025/05/19 13:48:05 - mmengine - INFO - Checkpoints will be saved to D:\Repositories\test\25-05-09\fasterrcnn.
+2025/05/19 13:48:28 - mmengine - INFO - Epoch(train)  [1][ 50/141]  lr: 1.9820e-03  eta: 0:32:03  time: 0.4602  data_time: 0.0914  memory: 4360  loss: nan  loss_rpn_cls: 0.6441  loss_rpn_bbox: 0.2572  loss_cls: 0.8301  acc: 81.3965  loss_bbox: nan
+2025/05/19 13:48:47 - mmengine - INFO - Epoch(train)  [1][100/141]  lr: 3.9840e-03  eta: 0:28:41  time: 0.3733  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.3878  loss_rpn_bbox: 0.2399  loss_cls: 0.6350  acc: 76.1230  loss_bbox: nan
+2025/05/19 13:49:02 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:49:12 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:49:14 - mmengine - INFO - bbox_mAP_copypaste: 0.109 0.281 0.046 -1.000 0.031 0.120
+2025/05/19 13:49:14 - mmengine - INFO - Epoch(val) [1][49/49]    coco/bbox_mAP: 0.1090  coco/bbox_mAP_50: 0.2810  coco/bbox_mAP_75: 0.0460  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0310  coco/bbox_mAP_l: 0.1200  data_time: 0.1636  time: 0.2046
+2025/05/19 13:49:15 - mmengine - INFO - The best checkpoint with 0.1090 coco/bbox_mAP at 1 epoch is saved to best_coco_bbox_mAP_epoch_1.pth.
+2025/05/19 13:49:33 - mmengine - INFO - Epoch(train)  [2][ 50/141]  lr: 7.6276e-03  eta: 0:26:41  time: 0.3755  data_time: 0.0048  memory: 4360  loss: nan  loss_rpn_cls: 0.2094  loss_rpn_bbox: 0.2286  loss_cls: 0.5874  acc: 76.4589  loss_bbox: nan
+2025/05/19 13:49:51 - mmengine - INFO - Epoch(train)  [2][100/141]  lr: 9.6296e-03  eta: 0:25:50  time: 0.3593  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.1617  loss_rpn_bbox: 0.2015  loss_cls: 0.5721  acc: 84.8145  loss_bbox: nan
+2025/05/19 13:50:06 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:50:08 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:50:09 - mmengine - INFO - bbox_mAP_copypaste: 0.233 0.487 0.180 -1.000 0.108 0.262
+2025/05/19 13:50:09 - mmengine - INFO - Epoch(val) [2][49/49]    coco/bbox_mAP: 0.2330  coco/bbox_mAP_50: 0.4870  coco/bbox_mAP_75: 0.1800  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1080  coco/bbox_mAP_l: 0.2620  data_time: 0.0016  time: 0.0374
+2025/05/19 13:50:09 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\fasterrcnn\best_coco_bbox_mAP_epoch_1.pth is removed
+2025/05/19 13:50:10 - mmengine - INFO - The best checkpoint with 0.2330 coco/bbox_mAP at 2 epoch is saved to best_coco_bbox_mAP_epoch_2.pth.
+2025/05/19 13:50:29 - mmengine - INFO - Epoch(train)  [3][ 50/141]  lr: 1.3273e-02  eta: 0:24:49  time: 0.3701  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.1250  loss_rpn_bbox: 0.1818  loss_cls: 0.5096  acc: 83.1055  loss_bbox: nan
+2025/05/19 13:50:47 - mmengine - INFO - Epoch(train)  [3][100/141]  lr: 1.5275e-02  eta: 0:24:17  time: 0.3577  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.1135  loss_rpn_bbox: 0.1812  loss_cls: 0.4844  acc: 82.4773  loss_bbox: nan
+2025/05/19 13:51:01 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:51:03 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:51:05 - mmengine - INFO - bbox_mAP_copypaste: 0.265 0.527 0.219 -1.000 0.186 0.284
+2025/05/19 13:51:05 - mmengine - INFO - Epoch(val) [3][49/49]    coco/bbox_mAP: 0.2650  coco/bbox_mAP_50: 0.5270  coco/bbox_mAP_75: 0.2190  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1860  coco/bbox_mAP_l: 0.2840  data_time: 0.0015  time: 0.0378
+2025/05/19 13:51:05 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\fasterrcnn\best_coco_bbox_mAP_epoch_2.pth is removed
+2025/05/19 13:51:06 - mmengine - INFO - The best checkpoint with 0.2650 coco/bbox_mAP at 3 epoch is saved to best_coco_bbox_mAP_epoch_3.pth.
+2025/05/19 13:51:24 - mmengine - INFO - Epoch(train)  [4][ 50/141]  lr: 1.8919e-02  eta: 0:23:31  time: 0.3661  data_time: 0.0051  memory: 4361  loss: nan  loss_rpn_cls: 0.1034  loss_rpn_bbox: 0.1798  loss_cls: 0.4727  acc: 84.0332  loss_bbox: nan
+2025/05/19 13:51:42 - mmengine - INFO - Epoch(train)  [4][100/141]  lr: 2.0000e-02  eta: 0:23:07  time: 0.3602  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.0968  loss_rpn_bbox: 0.1721  loss_cls: 0.4480  acc: 79.1992  loss_bbox: nan
+2025/05/19 13:51:56 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:51:58 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:52:00 - mmengine - INFO - bbox_mAP_copypaste: 0.326 0.587 0.330 -1.000 0.186 0.358
+2025/05/19 13:52:00 - mmengine - INFO - Epoch(val) [4][49/49]    coco/bbox_mAP: 0.3260  coco/bbox_mAP_50: 0.5870  coco/bbox_mAP_75: 0.3300  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1860  coco/bbox_mAP_l: 0.3580  data_time: 0.0016  time: 0.0377
+2025/05/19 13:52:00 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\fasterrcnn\best_coco_bbox_mAP_epoch_3.pth is removed
+2025/05/19 13:52:01 - mmengine - INFO - The best checkpoint with 0.3260 coco/bbox_mAP at 4 epoch is saved to best_coco_bbox_mAP_epoch_4.pth.
+2025/05/19 13:52:19 - mmengine - INFO - Epoch(train)  [5][ 50/141]  lr: 2.0000e-02  eta: 0:22:25  time: 0.3627  data_time: 0.0050  memory: 4361  loss: nan  loss_rpn_cls: 0.0932  loss_rpn_bbox: 0.1690  loss_cls: 0.4427  acc: 83.0566  loss_bbox: nan
+2025/05/19 13:52:37 - mmengine - INFO - Epoch(train)  [5][100/141]  lr: 2.0000e-02  eta: 0:22:03  time: 0.3598  data_time: 0.0024  memory: 4361  loss: nan  loss_rpn_cls: 0.0848  loss_rpn_bbox: 0.1597  loss_cls: 0.4209  acc: 80.9570  loss_bbox: nan
+2025/05/19 13:52:51 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:52:53 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:52:55 - mmengine - INFO - bbox_mAP_copypaste: 0.383 0.677 0.398 -1.000 0.274 0.405
+2025/05/19 13:52:55 - mmengine - INFO - Epoch(val) [5][49/49]    coco/bbox_mAP: 0.3830  coco/bbox_mAP_50: 0.6770  coco/bbox_mAP_75: 0.3980  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2740  coco/bbox_mAP_l: 0.4050  data_time: 0.0015  time: 0.0371
+2025/05/19 13:52:55 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\fasterrcnn\best_coco_bbox_mAP_epoch_4.pth is removed
+2025/05/19 13:52:56 - mmengine - INFO - The best checkpoint with 0.3830 coco/bbox_mAP at 5 epoch is saved to best_coco_bbox_mAP_epoch_5.pth.
+2025/05/19 13:53:14 - mmengine - INFO - Epoch(train)  [6][ 50/141]  lr: 2.0000e-02  eta: 0:21:25  time: 0.3651  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0803  loss_rpn_bbox: 0.1519  loss_cls: 0.3917  acc: 83.0566  loss_bbox: nan
+2025/05/19 13:53:32 - mmengine - INFO - Epoch(train)  [6][100/141]  lr: 2.0000e-02  eta: 0:21:04  time: 0.3596  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0775  loss_rpn_bbox: 0.1532  loss_cls: 0.4027  acc: 88.7695  loss_bbox: nan
+2025/05/19 13:53:47 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:53:48 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:53:50 - mmengine - INFO - bbox_mAP_copypaste: 0.338 0.676 0.281 -1.000 0.205 0.362
+2025/05/19 13:53:50 - mmengine - INFO - Epoch(val) [6][49/49]    coco/bbox_mAP: 0.3380  coco/bbox_mAP_50: 0.6760  coco/bbox_mAP_75: 0.2810  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2050  coco/bbox_mAP_l: 0.3620  data_time: 0.0016  time: 0.0373
+2025/05/19 13:54:08 - mmengine - INFO - Epoch(train)  [7][ 50/141]  lr: 2.0000e-02  eta: 0:20:28  time: 0.3630  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0746  loss_rpn_bbox: 0.1465  loss_cls: 0.3584  acc: 89.8771  loss_bbox: nan
+2025/05/19 13:54:26 - mmengine - INFO - Epoch(train)  [7][100/141]  lr: 2.0000e-02  eta: 0:20:09  time: 0.3612  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0628  loss_rpn_bbox: 0.1405  loss_cls: 0.3779  acc: 87.5977  loss_bbox: nan
+2025/05/19 13:54:41 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:54:43 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:54:44 - mmengine - INFO - bbox_mAP_copypaste: 0.416 0.757 0.409 -1.000 0.271 0.439
+2025/05/19 13:54:44 - mmengine - INFO - Epoch(val) [7][49/49]    coco/bbox_mAP: 0.4160  coco/bbox_mAP_50: 0.7570  coco/bbox_mAP_75: 0.4090  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2710  coco/bbox_mAP_l: 0.4390  data_time: 0.0014  time: 0.0371
+2025/05/19 13:54:44 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\fasterrcnn\best_coco_bbox_mAP_epoch_5.pth is removed
+2025/05/19 13:54:45 - mmengine - INFO - The best checkpoint with 0.4160 coco/bbox_mAP at 7 epoch is saved to best_coco_bbox_mAP_epoch_7.pth.
+2025/05/19 13:54:50 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:55:03 - mmengine - INFO - Epoch(train)  [8][ 50/141]  lr: 2.0000e-02  eta: 0:19:33  time: 0.3630  data_time: 0.0048  memory: 4360  loss: nan  loss_rpn_cls: 0.0637  loss_rpn_bbox: 0.1392  loss_cls: 0.3606  acc: 89.5996  loss_bbox: nan
+2025/05/19 13:55:21 - mmengine - INFO - Epoch(train)  [8][100/141]  lr: 2.0000e-02  eta: 0:19:13  time: 0.3571  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.0643  loss_rpn_bbox: 0.1352  loss_cls: 0.3560  acc: 86.8164  loss_bbox: nan
+2025/05/19 13:55:35 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:55:37 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:55:39 - mmengine - INFO - bbox_mAP_copypaste: 0.431 0.749 0.463 -1.000 0.255 0.464
+2025/05/19 13:55:39 - mmengine - INFO - Epoch(val) [8][49/49]    coco/bbox_mAP: 0.4310  coco/bbox_mAP_50: 0.7490  coco/bbox_mAP_75: 0.4630  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2550  coco/bbox_mAP_l: 0.4640  data_time: 0.0017  time: 0.0371
+2025/05/19 13:55:39 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\fasterrcnn\best_coco_bbox_mAP_epoch_7.pth is removed
+2025/05/19 13:55:40 - mmengine - INFO - The best checkpoint with 0.4310 coco/bbox_mAP at 8 epoch is saved to best_coco_bbox_mAP_epoch_8.pth.
+2025/05/19 13:55:58 - mmengine - INFO - Epoch(train)  [9][ 50/141]  lr: 2.0000e-03  eta: 0:18:39  time: 0.3699  data_time: 0.0050  memory: 4360  loss: nan  loss_rpn_cls: 0.0559  loss_rpn_bbox: 0.1231  loss_cls: 0.3314  acc: 83.2350  loss_bbox: nan
+2025/05/19 13:56:16 - mmengine - INFO - Epoch(train)  [9][100/141]  lr: 2.0000e-03  eta: 0:18:19  time: 0.3571  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0442  loss_rpn_bbox: 0.1147  loss_cls: 0.3111  acc: 87.2070  loss_bbox: nan
+2025/05/19 13:56:31 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:56:32 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:56:34 - mmengine - INFO - bbox_mAP_copypaste: 0.453 0.754 0.515 -1.000 0.296 0.481
+2025/05/19 13:56:34 - mmengine - INFO - Epoch(val) [9][49/49]    coco/bbox_mAP: 0.4530  coco/bbox_mAP_50: 0.7540  coco/bbox_mAP_75: 0.5150  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2960  coco/bbox_mAP_l: 0.4810  data_time: 0.0014  time: 0.0366
+2025/05/19 13:56:34 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\fasterrcnn\best_coco_bbox_mAP_epoch_8.pth is removed
+2025/05/19 13:56:35 - mmengine - INFO - The best checkpoint with 0.4530 coco/bbox_mAP at 9 epoch is saved to best_coco_bbox_mAP_epoch_9.pth.
+2025/05/19 13:56:53 - mmengine - INFO - Epoch(train) [10][ 50/141]  lr: 2.0000e-03  eta: 0:17:45  time: 0.3678  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0442  loss_rpn_bbox: 0.1133  loss_cls: 0.2991  acc: 87.2559  loss_bbox: nan
+2025/05/19 13:57:11 - mmengine - INFO - Epoch(train) [10][100/141]  lr: 2.0000e-03  eta: 0:17:27  time: 0.3627  data_time: 0.0022  memory: 4360  loss: nan  loss_rpn_cls: 0.0456  loss_rpn_bbox: 0.1150  loss_cls: 0.3054  acc: 86.8652  loss_bbox: nan
+2025/05/19 13:57:26 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:57:28 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:57:29 - mmengine - INFO - bbox_mAP_copypaste: 0.457 0.755 0.528 -1.000 0.306 0.484
+2025/05/19 13:57:29 - mmengine - INFO - Epoch(val) [10][49/49]    coco/bbox_mAP: 0.4570  coco/bbox_mAP_50: 0.7550  coco/bbox_mAP_75: 0.5280  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3060  coco/bbox_mAP_l: 0.4840  data_time: 0.0015  time: 0.0368
+2025/05/19 13:57:29 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\fasterrcnn\best_coco_bbox_mAP_epoch_9.pth is removed
+2025/05/19 13:57:30 - mmengine - INFO - The best checkpoint with 0.4570 coco/bbox_mAP at 10 epoch is saved to best_coco_bbox_mAP_epoch_10.pth.
+2025/05/19 13:57:48 - mmengine - INFO - Epoch(train) [11][ 50/141]  lr: 2.0000e-03  eta: 0:16:52  time: 0.3642  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0410  loss_rpn_bbox: 0.1110  loss_cls: 0.2941  acc: 87.1094  loss_bbox: nan
+2025/05/19 13:58:06 - mmengine - INFO - Epoch(train) [11][100/141]  lr: 2.0000e-03  eta: 0:16:34  time: 0.3597  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0416  loss_rpn_bbox: 0.1116  loss_cls: 0.2916  acc: 89.0137  loss_bbox: nan
+2025/05/19 13:58:21 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:58:23 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:58:24 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.740 0.526 -1.000 0.308 0.479
+2025/05/19 13:58:24 - mmengine - INFO - Epoch(val) [11][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7400  coco/bbox_mAP_75: 0.5260  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3080  coco/bbox_mAP_l: 0.4790  data_time: 0.0016  time: 0.0369
+2025/05/19 13:58:42 - mmengine - INFO - Epoch(train) [12][ 50/141]  lr: 2.0000e-04  eta: 0:16:00  time: 0.3625  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0461  loss_rpn_bbox: 0.1117  loss_cls: 0.2957  acc: 88.8184  loss_bbox: nan
+2025/05/19 13:59:00 - mmengine - INFO - Epoch(train) [12][100/141]  lr: 2.0000e-04  eta: 0:15:41  time: 0.3620  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0411  loss_rpn_bbox: 0.1086  loss_cls: 0.2772  acc: 88.8184  loss_bbox: nan
+2025/05/19 13:59:15 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 13:59:17 - mmengine - INFO - Evaluating bbox...
+2025/05/19 13:59:18 - mmengine - INFO - bbox_mAP_copypaste: 0.450 0.738 0.525 -1.000 0.298 0.478
+2025/05/19 13:59:18 - mmengine - INFO - Epoch(val) [12][49/49]    coco/bbox_mAP: 0.4500  coco/bbox_mAP_50: 0.7380  coco/bbox_mAP_75: 0.5250  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2980  coco/bbox_mAP_l: 0.4780  data_time: 0.0015  time: 0.0364
+2025/05/19 13:59:36 - mmengine - INFO - Epoch(train) [13][ 50/141]  lr: 2.0000e-04  eta: 0:15:07  time: 0.3641  data_time: 0.0048  memory: 4360  loss: nan  loss_rpn_cls: 0.0424  loss_rpn_bbox: 0.1089  loss_cls: 0.2878  acc: 85.1074  loss_bbox: nan
+2025/05/19 13:59:55 - mmengine - INFO - Epoch(train) [13][100/141]  lr: 2.0000e-04  eta: 0:14:49  time: 0.3635  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.0385  loss_rpn_bbox: 0.1109  loss_cls: 0.2814  acc: 88.6719  loss_bbox: nan
+2025/05/19 14:00:09 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:00:11 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:00:12 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.739 0.527 -1.000 0.304 0.480
+2025/05/19 14:00:12 - mmengine - INFO - Epoch(val) [13][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7390  coco/bbox_mAP_75: 0.5270  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3040  coco/bbox_mAP_l: 0.4800  data_time: 0.0015  time: 0.0370
+2025/05/19 14:00:31 - mmengine - INFO - Epoch(train) [14][ 50/141]  lr: 2.0000e-04  eta: 0:14:15  time: 0.3633  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0404  loss_rpn_bbox: 0.1094  loss_cls: 0.2888  acc: 88.9160  loss_bbox: nan
+2025/05/19 14:00:49 - mmengine - INFO - Epoch(train) [14][100/141]  lr: 2.0000e-04  eta: 0:13:57  time: 0.3583  data_time: 0.0022  memory: 4360  loss: nan  loss_rpn_cls: 0.0418  loss_rpn_bbox: 0.1099  loss_cls: 0.2869  acc: 90.4785  loss_bbox: nan
+2025/05/19 14:01:03 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:01:05 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:01:07 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.738 0.528 -1.000 0.305 0.480
+2025/05/19 14:01:07 - mmengine - INFO - Epoch(val) [14][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7380  coco/bbox_mAP_75: 0.5280  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3050  coco/bbox_mAP_l: 0.4800  data_time: 0.0013  time: 0.0367
+2025/05/19 14:01:16 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:01:25 - mmengine - INFO - Epoch(train) [15][ 50/141]  lr: 2.0000e-04  eta: 0:13:24  time: 0.3629  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0406  loss_rpn_bbox: 0.1088  loss_cls: 0.2868  acc: 89.3066  loss_bbox: nan
+2025/05/19 14:01:43 - mmengine - INFO - Epoch(train) [15][100/141]  lr: 2.0000e-04  eta: 0:13:05  time: 0.3606  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0401  loss_rpn_bbox: 0.1093  loss_cls: 0.2881  acc: 85.8398  loss_bbox: nan
+2025/05/19 14:01:58 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:02:00 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:02:01 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.739 0.528 -1.000 0.300 0.479
+2025/05/19 14:02:01 - mmengine - INFO - Epoch(val) [15][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7390  coco/bbox_mAP_75: 0.5280  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3000  coco/bbox_mAP_l: 0.4790  data_time: 0.0016  time: 0.0366
+2025/05/19 14:02:19 - mmengine - INFO - Epoch(train) [16][ 50/141]  lr: 2.0000e-04  eta: 0:12:32  time: 0.3641  data_time: 0.0051  memory: 4360  loss: nan  loss_rpn_cls: 0.0422  loss_rpn_bbox: 0.1068  loss_cls: 0.2790  acc: 88.1836  loss_bbox: nan
+2025/05/19 14:02:37 - mmengine - INFO - Epoch(train) [16][100/141]  lr: 2.0000e-04  eta: 0:12:13  time: 0.3588  data_time: 0.0022  memory: 4360  loss: nan  loss_rpn_cls: 0.0436  loss_rpn_bbox: 0.1090  loss_cls: 0.2887  acc: 88.8184  loss_bbox: nan
+2025/05/19 14:02:52 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:02:54 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:02:55 - mmengine - INFO - bbox_mAP_copypaste: 0.458 0.747 0.533 -1.000 0.311 0.485
+2025/05/19 14:02:55 - mmengine - INFO - Epoch(val) [16][49/49]    coco/bbox_mAP: 0.4580  coco/bbox_mAP_50: 0.7470  coco/bbox_mAP_75: 0.5330  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3110  coco/bbox_mAP_l: 0.4850  data_time: 0.0017  time: 0.0370
+2025/05/19 14:02:55 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\fasterrcnn\best_coco_bbox_mAP_epoch_10.pth is removed
+2025/05/19 14:02:56 - mmengine - INFO - The best checkpoint with 0.4580 coco/bbox_mAP at 16 epoch is saved to best_coco_bbox_mAP_epoch_16.pth.
+2025/05/19 14:03:14 - mmengine - INFO - Epoch(train) [17][ 50/141]  lr: 2.0000e-04  eta: 0:11:40  time: 0.3738  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0417  loss_rpn_bbox: 0.1092  loss_cls: 0.2842  acc: 87.5488  loss_bbox: nan
+2025/05/19 14:03:33 - mmengine - INFO - Epoch(train) [17][100/141]  lr: 2.0000e-04  eta: 0:11:22  time: 0.3609  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0395  loss_rpn_bbox: 0.1076  loss_cls: 0.2840  acc: 89.1602  loss_bbox: nan
+2025/05/19 14:03:47 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:03:49 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:03:50 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.740 0.527 -1.000 0.299 0.478
+2025/05/19 14:03:50 - mmengine - INFO - Epoch(val) [17][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7400  coco/bbox_mAP_75: 0.5270  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2990  coco/bbox_mAP_l: 0.4780  data_time: 0.0017  time: 0.0367
+2025/05/19 14:04:09 - mmengine - INFO - Epoch(train) [18][ 50/141]  lr: 2.0000e-04  eta: 0:10:49  time: 0.3656  data_time: 0.0048  memory: 4360  loss: nan  loss_rpn_cls: 0.0398  loss_rpn_bbox: 0.1084  loss_cls: 0.2801  acc: 90.9668  loss_bbox: nan
+2025/05/19 14:04:27 - mmengine - INFO - Epoch(train) [18][100/141]  lr: 2.0000e-04  eta: 0:10:30  time: 0.3615  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0417  loss_rpn_bbox: 0.1084  loss_cls: 0.2860  acc: 87.9883  loss_bbox: nan
+2025/05/19 14:04:42 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:04:43 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:04:45 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.739 0.527 -1.000 0.298 0.479
+2025/05/19 14:04:45 - mmengine - INFO - Epoch(val) [18][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7390  coco/bbox_mAP_75: 0.5270  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2980  coco/bbox_mAP_l: 0.4790  data_time: 0.0015  time: 0.0366
+2025/05/19 14:05:03 - mmengine - INFO - Epoch(train) [19][ 50/141]  lr: 2.0000e-04  eta: 0:09:57  time: 0.3632  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0396  loss_rpn_bbox: 0.1076  loss_cls: 0.2719  acc: 91.8457  loss_bbox: nan
+2025/05/19 14:05:21 - mmengine - INFO - Epoch(train) [19][100/141]  lr: 2.0000e-04  eta: 0:09:39  time: 0.3624  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0400  loss_rpn_bbox: 0.1078  loss_cls: 0.2845  acc: 91.1621  loss_bbox: nan
+2025/05/19 14:05:36 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:05:38 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:05:39 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.741 0.528 -1.000 0.302 0.479
+2025/05/19 14:05:39 - mmengine - INFO - Epoch(val) [19][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7410  coco/bbox_mAP_75: 0.5280  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3020  coco/bbox_mAP_l: 0.4790  data_time: 0.0017  time: 0.0370
+2025/05/19 14:05:57 - mmengine - INFO - Epoch(train) [20][ 50/141]  lr: 2.0000e-04  eta: 0:09:06  time: 0.3624  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0378  loss_rpn_bbox: 0.1078  loss_cls: 0.2732  acc: 89.4043  loss_bbox: nan
+2025/05/19 14:06:16 - mmengine - INFO - Epoch(train) [20][100/141]  lr: 2.0000e-04  eta: 0:08:48  time: 0.3652  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.0389  loss_rpn_bbox: 0.1083  loss_cls: 0.2735  acc: 89.6484  loss_bbox: nan
+2025/05/19 14:06:30 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:06:32 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:06:33 - mmengine - INFO - bbox_mAP_copypaste: 0.453 0.739 0.534 -1.000 0.301 0.479
+2025/05/19 14:06:33 - mmengine - INFO - Epoch(val) [20][49/49]    coco/bbox_mAP: 0.4530  coco/bbox_mAP_50: 0.7390  coco/bbox_mAP_75: 0.5340  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3010  coco/bbox_mAP_l: 0.4790  data_time: 0.0014  time: 0.0364
+2025/05/19 14:06:52 - mmengine - INFO - Epoch(train) [21][ 50/141]  lr: 2.0000e-04  eta: 0:08:14  time: 0.3642  data_time: 0.0050  memory: 4360  loss: nan  loss_rpn_cls: 0.0420  loss_rpn_bbox: 0.1091  loss_cls: 0.2843  acc: 85.8398  loss_bbox: nan
+2025/05/19 14:07:10 - mmengine - INFO - Epoch(train) [21][100/141]  lr: 2.0000e-04  eta: 0:07:56  time: 0.3595  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0379  loss_rpn_bbox: 0.1080  loss_cls: 0.2733  acc: 86.5234  loss_bbox: nan
+2025/05/19 14:07:25 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:07:26 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:07:28 - mmengine - INFO - bbox_mAP_copypaste: 0.453 0.742 0.528 -1.000 0.307 0.480
+2025/05/19 14:07:28 - mmengine - INFO - Epoch(val) [21][49/49]    coco/bbox_mAP: 0.4530  coco/bbox_mAP_50: 0.7420  coco/bbox_mAP_75: 0.5280  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3070  coco/bbox_mAP_l: 0.4800  data_time: 0.0015  time: 0.0368
+2025/05/19 14:07:42 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:07:46 - mmengine - INFO - Epoch(train) [22][ 50/141]  lr: 2.0000e-04  eta: 0:07:23  time: 0.3600  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0402  loss_rpn_bbox: 0.1080  loss_cls: 0.2761  acc: 88.5254  loss_bbox: nan
+2025/05/19 14:08:04 - mmengine - INFO - Epoch(train) [22][100/141]  lr: 2.0000e-04  eta: 0:07:05  time: 0.3612  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.0390  loss_rpn_bbox: 0.1069  loss_cls: 0.2747  acc: 88.5254  loss_bbox: nan
+2025/05/19 14:08:19 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:08:21 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:08:22 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.741 0.529 -1.000 0.303 0.480
+2025/05/19 14:08:22 - mmengine - INFO - Epoch(val) [22][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7410  coco/bbox_mAP_75: 0.5290  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3030  coco/bbox_mAP_l: 0.4800  data_time: 0.0017  time: 0.0376
+2025/05/19 14:08:40 - mmengine - INFO - Epoch(train) [23][ 50/141]  lr: 2.0000e-04  eta: 0:06:31  time: 0.3627  data_time: 0.0050  memory: 4360  loss: nan  loss_rpn_cls: 0.0384  loss_rpn_bbox: 0.1062  loss_cls: 0.2699  acc: 91.6992  loss_bbox: nan
+2025/05/19 14:08:58 - mmengine - INFO - Epoch(train) [23][100/141]  lr: 2.0000e-04  eta: 0:06:13  time: 0.3612  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0401  loss_rpn_bbox: 0.1084  loss_cls: 0.2724  acc: 91.3086  loss_bbox: nan
+2025/05/19 14:09:13 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:09:15 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:09:16 - mmengine - INFO - bbox_mAP_copypaste: 0.458 0.743 0.538 -1.000 0.306 0.484
+2025/05/19 14:09:16 - mmengine - INFO - Epoch(val) [23][49/49]    coco/bbox_mAP: 0.4580  coco/bbox_mAP_50: 0.7430  coco/bbox_mAP_75: 0.5380  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3060  coco/bbox_mAP_l: 0.4840  data_time: 0.0016  time: 0.0367
+2025/05/19 14:09:34 - mmengine - INFO - Epoch(train) [24][ 50/141]  lr: 2.0000e-04  eta: 0:05:40  time: 0.3646  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0406  loss_rpn_bbox: 0.1103  loss_cls: 0.2834  acc: 90.5762  loss_bbox: nan
+2025/05/19 14:09:53 - mmengine - INFO - Epoch(train) [24][100/141]  lr: 2.0000e-04  eta: 0:05:22  time: 0.3643  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0429  loss_rpn_bbox: 0.1100  loss_cls: 0.2790  acc: 90.1855  loss_bbox: nan
+2025/05/19 14:10:07 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:10:09 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:10:10 - mmengine - INFO - bbox_mAP_copypaste: 0.453 0.743 0.529 -1.000 0.293 0.481
+2025/05/19 14:10:10 - mmengine - INFO - Epoch(val) [24][49/49]    coco/bbox_mAP: 0.4530  coco/bbox_mAP_50: 0.7430  coco/bbox_mAP_75: 0.5290  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2930  coco/bbox_mAP_l: 0.4810  data_time: 0.0016  time: 0.0366
+2025/05/19 14:10:29 - mmengine - INFO - Epoch(train) [25][ 50/141]  lr: 2.0000e-04  eta: 0:04:49  time: 0.3671  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0398  loss_rpn_bbox: 0.1088  loss_cls: 0.2842  acc: 89.2090  loss_bbox: nan
+2025/05/19 14:10:47 - mmengine - INFO - Epoch(train) [25][100/141]  lr: 2.0000e-04  eta: 0:04:31  time: 0.3609  data_time: 0.0025  memory: 4360  loss: nan  loss_rpn_cls: 0.0388  loss_rpn_bbox: 0.1099  loss_cls: 0.2747  acc: 87.3535  loss_bbox: nan
+2025/05/19 14:11:01 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:11:03 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:11:05 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.737 0.531 -1.000 0.294 0.479
+2025/05/19 14:11:05 - mmengine - INFO - Epoch(val) [25][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7370  coco/bbox_mAP_75: 0.5310  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2940  coco/bbox_mAP_l: 0.4790  data_time: 0.0016  time: 0.0367
+2025/05/19 14:11:23 - mmengine - INFO - Epoch(train) [26][ 50/141]  lr: 2.0000e-04  eta: 0:03:58  time: 0.3643  data_time: 0.0049  memory: 4360  loss: nan  loss_rpn_cls: 0.0394  loss_rpn_bbox: 0.1070  loss_cls: 0.2748  acc: 89.3555  loss_bbox: nan
+2025/05/19 14:11:41 - mmengine - INFO - Epoch(train) [26][100/141]  lr: 2.0000e-04  eta: 0:03:39  time: 0.3619  data_time: 0.0022  memory: 4360  loss: nan  loss_rpn_cls: 0.0396  loss_rpn_bbox: 0.1097  loss_cls: 0.2773  acc: 90.5762  loss_bbox: nan
+2025/05/19 14:11:56 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:11:58 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:11:59 - mmengine - INFO - bbox_mAP_copypaste: 0.454 0.742 0.529 -1.000 0.310 0.480
+2025/05/19 14:11:59 - mmengine - INFO - Epoch(val) [26][49/49]    coco/bbox_mAP: 0.4540  coco/bbox_mAP_50: 0.7420  coco/bbox_mAP_75: 0.5290  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3100  coco/bbox_mAP_l: 0.4800  data_time: 0.0016  time: 0.0366
+2025/05/19 14:12:17 - mmengine - INFO - Epoch(train) [27][ 50/141]  lr: 2.0000e-04  eta: 0:03:06  time: 0.3623  data_time: 0.0048  memory: 4360  loss: nan  loss_rpn_cls: 0.0411  loss_rpn_bbox: 0.1083  loss_cls: 0.2786  acc: 88.5742  loss_bbox: nan
+2025/05/19 14:12:35 - mmengine - INFO - Epoch(train) [27][100/141]  lr: 2.0000e-04  eta: 0:02:48  time: 0.3659  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.0390  loss_rpn_bbox: 0.1059  loss_cls: 0.2700  acc: 88.6719  loss_bbox: nan
+2025/05/19 14:12:50 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:12:52 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:12:53 - mmengine - INFO - bbox_mAP_copypaste: 0.450 0.738 0.524 -1.000 0.294 0.477
+2025/05/19 14:12:53 - mmengine - INFO - Epoch(val) [27][49/49]    coco/bbox_mAP: 0.4500  coco/bbox_mAP_50: 0.7380  coco/bbox_mAP_75: 0.5240  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2940  coco/bbox_mAP_l: 0.4770  data_time: 0.0016  time: 0.0367
+2025/05/19 14:13:12 - mmengine - INFO - Epoch(train) [28][ 50/141]  lr: 2.0000e-04  eta: 0:02:15  time: 0.3661  data_time: 0.0050  memory: 4360  loss: nan  loss_rpn_cls: 0.0429  loss_rpn_bbox: 0.1107  loss_cls: 0.2821  acc: 90.8691  loss_bbox: nan
+2025/05/19 14:13:30 - mmengine - INFO - Epoch(train) [28][100/141]  lr: 2.0000e-04  eta: 0:01:57  time: 0.3587  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0376  loss_rpn_bbox: 0.1056  loss_cls: 0.2777  acc: 87.1094  loss_bbox: nan
+2025/05/19 14:13:44 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:13:46 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:13:47 - mmengine - INFO - bbox_mAP_copypaste: 0.451 0.739 0.526 -1.000 0.291 0.478
+2025/05/19 14:13:47 - mmengine - INFO - Epoch(val) [28][49/49]    coco/bbox_mAP: 0.4510  coco/bbox_mAP_50: 0.7390  coco/bbox_mAP_75: 0.5260  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2910  coco/bbox_mAP_l: 0.4780  data_time: 0.0016  time: 0.0367
+2025/05/19 14:14:06 - mmengine - INFO - Epoch(train) [29][ 50/141]  lr: 2.0000e-04  eta: 0:01:24  time: 0.3625  data_time: 0.0050  memory: 4360  loss: nan  loss_rpn_cls: 0.0413  loss_rpn_bbox: 0.1063  loss_cls: 0.2651  acc: 91.0156  loss_bbox: nan
+2025/05/19 14:14:06 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:14:24 - mmengine - INFO - Epoch(train) [29][100/141]  lr: 2.0000e-04  eta: 0:01:06  time: 0.3622  data_time: 0.0023  memory: 4360  loss: nan  loss_rpn_cls: 0.0404  loss_rpn_bbox: 0.1086  loss_cls: 0.2781  acc: 89.3555  loss_bbox: nan
+2025/05/19 14:14:39 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:14:40 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:14:42 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.740 0.531 -1.000 0.301 0.478
+2025/05/19 14:14:42 - mmengine - INFO - Epoch(val) [29][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7400  coco/bbox_mAP_75: 0.5310  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3010  coco/bbox_mAP_l: 0.4780  data_time: 0.0015  time: 0.0369
+2025/05/19 14:15:00 - mmengine - INFO - Epoch(train) [30][ 50/141]  lr: 2.0000e-04  eta: 0:00:33  time: 0.3727  data_time: 0.0051  memory: 4360  loss: nan  loss_rpn_cls: 0.0395  loss_rpn_bbox: 0.1092  loss_cls: 0.2764  acc: 87.0117  loss_bbox: nan
+2025/05/19 14:15:18 - mmengine - INFO - Epoch(train) [30][100/141]  lr: 2.0000e-04  eta: 0:00:14  time: 0.3575  data_time: 0.0024  memory: 4360  loss: nan  loss_rpn_cls: 0.0370  loss_rpn_bbox: 0.1084  loss_cls: 0.2791  acc: 87.8418  loss_bbox: nan
+2025/05/19 14:15:33 - mmengine - INFO - Exp name: fasterrcnn_fs_shear_y_20250519_134759
+2025/05/19 14:15:33 - mmengine - INFO - Saving checkpoint at 30 epochs
+2025/05/19 14:15:36 - mmengine - INFO - Evaluating bbox...
+2025/05/19 14:15:38 - mmengine - INFO - bbox_mAP_copypaste: 0.452 0.740 0.528 -1.000 0.293 0.480
+2025/05/19 14:15:38 - mmengine - INFO - Epoch(val) [30][49/49]    coco/bbox_mAP: 0.4520  coco/bbox_mAP_50: 0.7400  coco/bbox_mAP_75: 0.5280  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2930  coco/bbox_mAP_l: 0.4800  data_time: 0.0015  time: 0.0379

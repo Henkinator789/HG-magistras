@@ -1,0 +1,1039 @@
+2025/05/17 22:51:10 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: win32
+    Python: 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 892490283
+    GPU 0: NVIDIA GeForce RTX 3070 Ti
+    CUDA_HOME: C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6
+    NVCC: Cuda compilation tools, release 12.6, V12.6.85
+    MSVC: Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34433 for x64
+    GCC: n/a
+    PyTorch: 2.1.0+cu118
+    PyTorch compiling details: PyTorch built with:
+  - C++ Version: 199711
+  - MSVC 192930151
+  - Intel(R) Math Kernel Library Version 2020.0.2 Product Build 20200624 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 2019
+  - LAPACK is enabled (usually provided by MKL)
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.7
+  - Magma 2.5.4
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/builder/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /bigobj /FS -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /utf-8 /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=OFF, TORCH_VERSION=2.1.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.0+cu118
+    OpenCV: 4.10.0
+    MMEngine: 0.10.5
+
+Runtime environment:
+    cudnn_benchmark: False
+    dist_cfg: {'backend': 'nccl'}
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    seed: 892490283
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2025/05/17 22:51:10 - mmengine - INFO - Config:
+auto_scale_lr = dict(base_batch_size=64, enable=False)
+backend_args = None
+cudnn_benchmark = True
+custom_hooks = [
+    dict(type='NumClassCheckHook'),
+    dict(interval=50, priority='VERY_LOW', type='CheckInvalidLossHook'),
+]
+data_root = 'D:/Repositories/test/data/larch_casebearer/'
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    checkpoint=dict(
+        interval=0, save_best='coco/bbox_mAP', type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='DetVisualizationHook'))
+default_scope = 'mmdet'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+input_size = 300
+launcher = 'none'
+load_from = None
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+metainfo = dict(
+    classes=(
+        'H',
+        'LD',
+        'HD',
+        'other',
+    ),
+    palette=[
+        (
+            0,
+            255,
+            0,
+        ),
+        (
+            255,
+            128,
+            0,
+        ),
+        (
+            255,
+            0,
+            0,
+        ),
+        (
+            0,
+            0,
+            255,
+        ),
+    ])
+model = dict(
+    backbone=dict(
+        ceil_mode=True,
+        depth=16,
+        init_cfg=dict(
+            checkpoint='open-mmlab://vgg16_caffe', type='Pretrained'),
+        out_feature_indices=(
+            22,
+            34,
+        ),
+        out_indices=(
+            3,
+            4,
+        ),
+        type='SSDVGG',
+        with_last_pool=False),
+    bbox_head=dict(
+        anchor_generator=dict(
+            basesize_ratio_range=(
+                0.15,
+                0.9,
+            ),
+            input_size=300,
+            ratios=[
+                [
+                    2,
+                ],
+                [
+                    2,
+                    3,
+                ],
+                [
+                    2,
+                    3,
+                ],
+                [
+                    2,
+                    3,
+                ],
+                [
+                    2,
+                ],
+                [
+                    2,
+                ],
+            ],
+            scale_major=False,
+            strides=[
+                8,
+                16,
+                32,
+                64,
+                100,
+                300,
+            ],
+            type='SSDAnchorGenerator'),
+        bbox_coder=dict(
+            target_means=[
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+            ],
+            target_stds=[
+                0.1,
+                0.1,
+                0.2,
+                0.2,
+            ],
+            type='DeltaXYWHBBoxCoder'),
+        in_channels=(
+            512,
+            1024,
+            512,
+            256,
+            256,
+            256,
+        ),
+        num_classes=4,
+        type='SSDHead'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        pad_size_divisor=1,
+        std=[
+            1,
+            1,
+            1,
+        ],
+        type='DetDataPreprocessor'),
+    neck=dict(
+        in_channels=(
+            512,
+            1024,
+        ),
+        l2_norm_scale=20,
+        level_paddings=(
+            1,
+            1,
+            0,
+            0,
+        ),
+        level_strides=(
+            2,
+            2,
+            1,
+            1,
+        ),
+        out_channels=(
+            512,
+            1024,
+            512,
+            256,
+            256,
+            256,
+        ),
+        type='SSDNeck'),
+    test_cfg=dict(
+        max_per_img=200,
+        min_bbox_size=0,
+        nms=dict(iou_threshold=0.45, type='nms'),
+        nms_pre=1000,
+        score_thr=0.02),
+    train_cfg=dict(
+        allowed_border=-1,
+        assigner=dict(
+            gt_max_assign_all=False,
+            ignore_iof_thr=-1,
+            min_pos_iou=0.0,
+            neg_iou_thr=0.5,
+            pos_iou_thr=0.5,
+            type='MaxIoUAssigner'),
+        debug=False,
+        neg_pos_ratio=3,
+        pos_weight=-1,
+        sampler=dict(type='PseudoSampler'),
+        smoothl1_beta=1.0),
+    type='SingleStageDetector')
+optim_wrapper = dict(
+    optimizer=dict(lr=0.002, momentum=0.9, type='SGD', weight_decay=0.0005),
+    type='OptimWrapper')
+param_scheduler = [
+    dict(
+        begin=0, by_epoch=False, end=500, start_factor=0.001, type='LinearLR'),
+    dict(
+        begin=0,
+        by_epoch=True,
+        end=24,
+        gamma=0.1,
+        milestones=[
+            16,
+            22,
+        ],
+        type='MultiStepLR'),
+]
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=8,
+    dataset=dict(
+        ann_file='test/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='test/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=False, scale=(
+                300,
+                300,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='D:/Repositories/test/data/larch_casebearer/test/annotations.json',
+    backend_args=None,
+    classwise=True,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+test_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(keep_ratio=False, scale=(
+        300,
+        300,
+    ), type='Resize'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+        ),
+        type='PackDetInputs'),
+]
+train_cfg = dict(max_epochs=30, type='EpochBasedTrainLoop', val_interval=1)
+train_dataloader = dict(
+    batch_sampler=None,
+    batch_size=8,
+    dataset=dict(
+        dataset=dict(
+            ann_file='train/annotations.json',
+            backend_args=None,
+            data_prefix=dict(img='train/'),
+            data_root='D:/Repositories/test/data/larch_casebearer/',
+            filter_cfg=dict(filter_empty_gt=True, min_size=32),
+            metainfo=dict(
+                classes=(
+                    'H',
+                    'LD',
+                    'HD',
+                    'other',
+                ),
+                palette=[
+                    (
+                        0,
+                        255,
+                        0,
+                    ),
+                    (
+                        255,
+                        128,
+                        0,
+                    ),
+                    (
+                        255,
+                        0,
+                        0,
+                    ),
+                    (
+                        0,
+                        0,
+                        255,
+                    ),
+                ]),
+            pipeline=[
+                dict(backend_args=None, type='LoadImageFromFile'),
+                dict(type='LoadAnnotations', with_bbox=True),
+                dict(
+                    mean=[
+                        123.675,
+                        116.28,
+                        103.53,
+                    ],
+                    ratio_range=(
+                        1,
+                        4,
+                    ),
+                    to_rgb=True,
+                    type='Expand'),
+                dict(
+                    min_crop_size=0.3,
+                    min_ious=(
+                        0.1,
+                        0.3,
+                        0.5,
+                        0.7,
+                        0.9,
+                    ),
+                    type='MinIoURandomCrop'),
+                dict(keep_ratio=False, scale=(
+                    300,
+                    300,
+                ), type='Resize'),
+                dict(prob=0.5, type='RandomFlip'),
+                dict(
+                    brightness_delta=32,
+                    contrast_range=(
+                        0.5,
+                        1.5,
+                    ),
+                    hue_delta=18,
+                    saturation_range=(
+                        0.5,
+                        1.5,
+                    ),
+                    type='PhotoMetricDistortion'),
+                dict(type='PackDetInputs'),
+            ],
+            type='CocoDataset'),
+        oversample_thr=0.25,
+        type='ClassBalancedDataset'),
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        ratio_range=(
+            1,
+            4,
+        ),
+        to_rgb=True,
+        type='Expand'),
+    dict(
+        min_crop_size=0.3,
+        min_ious=(
+            0.1,
+            0.3,
+            0.5,
+            0.7,
+            0.9,
+        ),
+        type='MinIoURandomCrop'),
+    dict(keep_ratio=False, scale=(
+        300,
+        300,
+    ), type='Resize'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(
+        brightness_delta=32,
+        contrast_range=(
+            0.5,
+            1.5,
+        ),
+        hue_delta=18,
+        saturation_range=(
+            0.5,
+            1.5,
+        ),
+        type='PhotoMetricDistortion'),
+    dict(type='PackDetInputs'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=8,
+    dataset=dict(
+        ann_file='val/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='val/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=False, scale=(
+                300,
+                300,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='D:/Repositories/test/data/larch_casebearer/val/annotations.json',
+    backend_args=None,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = '25-05-09/ssd300'
+
+2025/05/17 22:51:11 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2025/05/17 22:51:11 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+(NORMAL      ) NumClassCheckHook                  
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+(VERY_LOW    ) CheckInvalidLossHook               
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) NumClassCheckHook                  
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2025/05/17 22:51:12 - mmengine - INFO - load model from: open-mmlab://vgg16_caffe
+2025/05/17 22:51:12 - mmengine - INFO - Loads checkpoint by openmmlab backend from path: open-mmlab://vgg16_caffe
+Name of parameter - Initialization information
+
+backbone.features.0.weight - torch.Size([64, 3, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.0.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.2.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.5.weight - torch.Size([128, 64, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.5.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.7.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.7.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.10.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.10.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.12.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.12.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.14.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.14.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.17.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.17.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.19.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.19.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.21.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.21.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.24.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.24.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.26.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.26.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.28.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.28.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.31.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.31.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.33.weight - torch.Size([1024, 1024, 1, 1]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+backbone.features.33.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://vgg16_caffe 
+
+neck.l2_norm.weight - torch.Size([512]): 
+ConstantInit: val=20, bias=0 
+
+neck.extra_layers.0.0.conv.weight - torch.Size([256, 1024, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.extra_layers.0.0.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SingleStageDetector  
+
+neck.extra_layers.0.1.conv.weight - torch.Size([512, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.extra_layers.0.1.conv.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SingleStageDetector  
+
+neck.extra_layers.1.0.conv.weight - torch.Size([128, 512, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.extra_layers.1.0.conv.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SingleStageDetector  
+
+neck.extra_layers.1.1.conv.weight - torch.Size([256, 128, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.extra_layers.1.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SingleStageDetector  
+
+neck.extra_layers.2.0.conv.weight - torch.Size([128, 256, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.extra_layers.2.0.conv.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SingleStageDetector  
+
+neck.extra_layers.2.1.conv.weight - torch.Size([256, 128, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.extra_layers.2.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SingleStageDetector  
+
+neck.extra_layers.3.0.conv.weight - torch.Size([128, 256, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.extra_layers.3.0.conv.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SingleStageDetector  
+
+neck.extra_layers.3.1.conv.weight - torch.Size([256, 128, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.extra_layers.3.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SingleStageDetector  
+
+bbox_head.cls_convs.0.0.weight - torch.Size([20, 512, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.0.0.bias - torch.Size([20]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.1.0.weight - torch.Size([30, 1024, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.1.0.bias - torch.Size([30]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.2.0.weight - torch.Size([30, 512, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.2.0.bias - torch.Size([30]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.3.0.weight - torch.Size([30, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.3.0.bias - torch.Size([30]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.4.0.weight - torch.Size([20, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.4.0.bias - torch.Size([20]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.5.0.weight - torch.Size([20, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.cls_convs.5.0.bias - torch.Size([20]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.0.0.weight - torch.Size([16, 512, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.0.0.bias - torch.Size([16]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.1.0.weight - torch.Size([24, 1024, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.1.0.bias - torch.Size([24]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.2.0.weight - torch.Size([24, 512, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.2.0.bias - torch.Size([24]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.3.0.weight - torch.Size([24, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.3.0.bias - torch.Size([24]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.4.0.weight - torch.Size([16, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.4.0.bias - torch.Size([16]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.5.0.weight - torch.Size([16, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+bbox_head.reg_convs.5.0.bias - torch.Size([16]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+2025/05/17 22:51:12 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2025/05/17 22:51:12 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2025/05/17 22:51:12 - mmengine - INFO - Checkpoints will be saved to D:\Repositories\test\25-05-09\ssd300.
+2025/05/17 22:51:39 - mmengine - INFO - Epoch(train)  [1][50/71]  lr: 1.9820e-04  eta: 0:18:27  time: 0.5326  data_time: 0.2760  memory: 1437  loss: 11.3292  loss_cls: 7.7152  loss_bbox: 3.6140
+2025/05/17 22:51:46 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:51:55 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:51:58 - mmengine - INFO - bbox_mAP_copypaste: 0.025 0.086 0.005 -1.000 0.000 0.029
+2025/05/17 22:51:58 - mmengine - INFO - Epoch(val) [1][7/7]    coco/bbox_mAP: 0.0250  coco/bbox_mAP_50: 0.0860  coco/bbox_mAP_75: 0.0050  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0000  coco/bbox_mAP_l: 0.0290  data_time: 1.1708  time: 1.2851
+2025/05/17 22:51:59 - mmengine - INFO - The best checkpoint with 0.0250 coco/bbox_mAP at 1 epoch is saved to best_coco_bbox_mAP_epoch_1.pth.
+2025/05/17 22:52:16 - mmengine - INFO - Epoch(train)  [2][50/71]  lr: 4.8248e-04  eta: 0:14:19  time: 0.3534  data_time: 0.1071  memory: 1437  loss: 6.1886  loss_cls: 3.7062  loss_bbox: 2.4825
+2025/05/17 22:52:23 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:52:24 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:52:27 - mmengine - INFO - bbox_mAP_copypaste: 0.065 0.176 0.026 -1.000 0.004 0.084
+2025/05/17 22:52:27 - mmengine - INFO - Epoch(val) [2][7/7]    coco/bbox_mAP: 0.0650  coco/bbox_mAP_50: 0.1760  coco/bbox_mAP_75: 0.0260  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0040  coco/bbox_mAP_l: 0.0840  data_time: 0.0627  time: 0.1379
+2025/05/17 22:52:27 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_1.pth is removed
+2025/05/17 22:52:27 - mmengine - INFO - The best checkpoint with 0.0650 coco/bbox_mAP at 2 epoch is saved to best_coco_bbox_mAP_epoch_2.pth.
+2025/05/17 22:52:46 - mmengine - INFO - Epoch(train)  [3][50/71]  lr: 7.6677e-04  eta: 0:12:56  time: 0.3662  data_time: 0.1277  memory: 1437  loss: 5.6435  loss_cls: 3.4765  loss_bbox: 2.1670
+2025/05/17 22:52:52 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:52:54 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:52:56 - mmengine - INFO - bbox_mAP_copypaste: 0.078 0.204 0.029 -1.000 0.028 0.098
+2025/05/17 22:52:56 - mmengine - INFO - Epoch(val) [3][7/7]    coco/bbox_mAP: 0.0780  coco/bbox_mAP_50: 0.2040  coco/bbox_mAP_75: 0.0290  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0280  coco/bbox_mAP_l: 0.0980  data_time: 0.0596  time: 0.1220
+2025/05/17 22:52:56 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_2.pth is removed
+2025/05/17 22:52:56 - mmengine - INFO - The best checkpoint with 0.0780 coco/bbox_mAP at 3 epoch is saved to best_coco_bbox_mAP_epoch_3.pth.
+2025/05/17 22:53:14 - mmengine - INFO - Epoch(train)  [4][50/71]  lr: 1.0511e-03  eta: 0:12:00  time: 0.3560  data_time: 0.1169  memory: 1437  loss: 5.2211  loss_cls: 3.3113  loss_bbox: 1.9098
+2025/05/17 22:53:20 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:53:22 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:53:24 - mmengine - INFO - bbox_mAP_copypaste: 0.122 0.253 0.095 -1.000 0.055 0.134
+2025/05/17 22:53:24 - mmengine - INFO - Epoch(val) [4][7/7]    coco/bbox_mAP: 0.1220  coco/bbox_mAP_50: 0.2530  coco/bbox_mAP_75: 0.0950  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0550  coco/bbox_mAP_l: 0.1340  data_time: 0.0662  time: 0.1289
+2025/05/17 22:53:24 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_3.pth is removed
+2025/05/17 22:53:25 - mmengine - INFO - The best checkpoint with 0.1220 coco/bbox_mAP at 4 epoch is saved to best_coco_bbox_mAP_epoch_4.pth.
+2025/05/17 22:53:42 - mmengine - INFO - Epoch(train)  [5][50/71]  lr: 1.3353e-03  eta: 0:11:13  time: 0.3502  data_time: 0.1110  memory: 1437  loss: 5.0814  loss_cls: 3.2640  loss_bbox: 1.8174
+2025/05/17 22:53:50 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:53:51 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:53:53 - mmengine - INFO - bbox_mAP_copypaste: 0.172 0.370 0.129 -1.000 0.085 0.190
+2025/05/17 22:53:53 - mmengine - INFO - Epoch(val) [5][7/7]    coco/bbox_mAP: 0.1720  coco/bbox_mAP_50: 0.3700  coco/bbox_mAP_75: 0.1290  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0850  coco/bbox_mAP_l: 0.1900  data_time: 0.0643  time: 0.1282
+2025/05/17 22:53:53 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_4.pth is removed
+2025/05/17 22:53:54 - mmengine - INFO - The best checkpoint with 0.1720 coco/bbox_mAP at 5 epoch is saved to best_coco_bbox_mAP_epoch_5.pth.
+2025/05/17 22:54:13 - mmengine - INFO - Epoch(train)  [6][50/71]  lr: 1.6196e-03  eta: 0:10:44  time: 0.3761  data_time: 0.1321  memory: 1437  loss: 5.1697  loss_cls: 3.2103  loss_bbox: 1.9593
+2025/05/17 22:54:20 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:54:21 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:54:24 - mmengine - INFO - bbox_mAP_copypaste: 0.207 0.469 0.127 -1.000 0.100 0.234
+2025/05/17 22:54:24 - mmengine - INFO - Epoch(val) [6][7/7]    coco/bbox_mAP: 0.2070  coco/bbox_mAP_50: 0.4690  coco/bbox_mAP_75: 0.1270  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1000  coco/bbox_mAP_l: 0.2340  data_time: 0.0636  time: 0.1300
+2025/05/17 22:54:24 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_5.pth is removed
+2025/05/17 22:54:24 - mmengine - INFO - The best checkpoint with 0.2070 coco/bbox_mAP at 6 epoch is saved to best_coco_bbox_mAP_epoch_6.pth.
+2025/05/17 22:54:43 - mmengine - INFO - Epoch(train)  [7][50/71]  lr: 1.9039e-03  eta: 0:10:16  time: 0.3767  data_time: 0.1383  memory: 1437  loss: 5.1406  loss_cls: 3.2580  loss_bbox: 1.8826
+2025/05/17 22:54:50 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:54:51 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:54:53 - mmengine - INFO - bbox_mAP_copypaste: 0.195 0.451 0.131 -1.000 0.098 0.223
+2025/05/17 22:54:53 - mmengine - INFO - Epoch(val) [7][7/7]    coco/bbox_mAP: 0.1950  coco/bbox_mAP_50: 0.4510  coco/bbox_mAP_75: 0.1310  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0980  coco/bbox_mAP_l: 0.2230  data_time: 0.0620  time: 0.1279
+2025/05/17 22:55:11 - mmengine - INFO - Epoch(train)  [8][50/71]  lr: 2.0000e-03  eta: 0:09:45  time: 0.3618  data_time: 0.1220  memory: 1437  loss: 5.0108  loss_cls: 3.1786  loss_bbox: 1.8322
+2025/05/17 22:55:19 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:55:20 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:55:23 - mmengine - INFO - bbox_mAP_copypaste: 0.087 0.338 0.015 -1.000 0.060 0.101
+2025/05/17 22:55:23 - mmengine - INFO - Epoch(val) [8][7/7]    coco/bbox_mAP: 0.0870  coco/bbox_mAP_50: 0.3380  coco/bbox_mAP_75: 0.0150  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0600  coco/bbox_mAP_l: 0.1010  data_time: 0.0627  time: 0.1287
+2025/05/17 22:55:42 - mmengine - INFO - Epoch(train)  [9][50/71]  lr: 2.0000e-03  eta: 0:09:19  time: 0.3799  data_time: 0.1392  memory: 1437  loss: 4.7296  loss_cls: 2.9886  loss_bbox: 1.7410
+2025/05/17 22:55:48 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:55:49 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:55:52 - mmengine - INFO - bbox_mAP_copypaste: 0.232 0.496 0.169 -1.000 0.142 0.253
+2025/05/17 22:55:52 - mmengine - INFO - Epoch(val) [9][7/7]    coco/bbox_mAP: 0.2320  coco/bbox_mAP_50: 0.4960  coco/bbox_mAP_75: 0.1690  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1420  coco/bbox_mAP_l: 0.2530  data_time: 0.0635  time: 0.1272
+2025/05/17 22:55:52 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_6.pth is removed
+2025/05/17 22:55:53 - mmengine - INFO - The best checkpoint with 0.2320 coco/bbox_mAP at 9 epoch is saved to best_coco_bbox_mAP_epoch_9.pth.
+2025/05/17 22:56:11 - mmengine - INFO - Epoch(train) [10][50/71]  lr: 2.0000e-03  eta: 0:08:49  time: 0.3600  data_time: 0.1191  memory: 1437  loss: 4.3954  loss_cls: 2.8708  loss_bbox: 1.5246
+2025/05/17 22:56:17 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:56:18 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:56:21 - mmengine - INFO - bbox_mAP_copypaste: 0.251 0.555 0.163 -1.000 0.157 0.274
+2025/05/17 22:56:21 - mmengine - INFO - Epoch(val) [10][7/7]    coco/bbox_mAP: 0.2510  coco/bbox_mAP_50: 0.5550  coco/bbox_mAP_75: 0.1630  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1570  coco/bbox_mAP_l: 0.2740  data_time: 0.0694  time: 0.1323
+2025/05/17 22:56:21 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_9.pth is removed
+2025/05/17 22:56:22 - mmengine - INFO - The best checkpoint with 0.2510 coco/bbox_mAP at 10 epoch is saved to best_coco_bbox_mAP_epoch_10.pth.
+2025/05/17 22:56:40 - mmengine - INFO - Epoch(train) [11][50/71]  lr: 2.0000e-03  eta: 0:08:21  time: 0.3651  data_time: 0.1231  memory: 1437  loss: 4.2007  loss_cls: 2.7383  loss_bbox: 1.4624
+2025/05/17 22:56:47 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:56:48 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:56:51 - mmengine - INFO - bbox_mAP_copypaste: 0.234 0.537 0.148 -1.000 0.114 0.263
+2025/05/17 22:56:51 - mmengine - INFO - Epoch(val) [11][7/7]    coco/bbox_mAP: 0.2340  coco/bbox_mAP_50: 0.5370  coco/bbox_mAP_75: 0.1480  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1140  coco/bbox_mAP_l: 0.2630  data_time: 0.0702  time: 0.1339
+2025/05/17 22:57:10 - mmengine - INFO - Epoch(train) [12][50/71]  lr: 2.0000e-03  eta: 0:07:56  time: 0.3763  data_time: 0.1356  memory: 1437  loss: 4.1920  loss_cls: 2.7386  loss_bbox: 1.4533
+2025/05/17 22:57:17 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:57:18 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:57:21 - mmengine - INFO - bbox_mAP_copypaste: 0.272 0.609 0.185 -1.000 0.121 0.297
+2025/05/17 22:57:21 - mmengine - INFO - Epoch(val) [12][7/7]    coco/bbox_mAP: 0.2720  coco/bbox_mAP_50: 0.6090  coco/bbox_mAP_75: 0.1850  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1210  coco/bbox_mAP_l: 0.2970  data_time: 0.0693  time: 0.1325
+2025/05/17 22:57:21 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_10.pth is removed
+2025/05/17 22:57:21 - mmengine - INFO - The best checkpoint with 0.2720 coco/bbox_mAP at 12 epoch is saved to best_coco_bbox_mAP_epoch_12.pth.
+2025/05/17 22:57:40 - mmengine - INFO - Epoch(train) [13][50/71]  lr: 2.0000e-03  eta: 0:07:29  time: 0.3628  data_time: 0.1231  memory: 1437  loss: 3.9120  loss_cls: 2.5767  loss_bbox: 1.3353
+2025/05/17 22:57:46 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:57:47 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:57:50 - mmengine - INFO - bbox_mAP_copypaste: 0.206 0.521 0.095 -1.000 0.105 0.229
+2025/05/17 22:57:50 - mmengine - INFO - Epoch(val) [13][7/7]    coco/bbox_mAP: 0.2060  coco/bbox_mAP_50: 0.5210  coco/bbox_mAP_75: 0.0950  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1050  coco/bbox_mAP_l: 0.2290  data_time: 0.0613  time: 0.1261
+2025/05/17 22:58:08 - mmengine - INFO - Epoch(train) [14][50/71]  lr: 2.0000e-03  eta: 0:07:01  time: 0.3501  data_time: 0.1121  memory: 1437  loss: 3.9060  loss_cls: 2.5968  loss_bbox: 1.3092
+2025/05/17 22:58:14 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:58:16 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:58:18 - mmengine - INFO - bbox_mAP_copypaste: 0.326 0.636 0.295 -1.000 0.163 0.356
+2025/05/17 22:58:18 - mmengine - INFO - Epoch(val) [14][7/7]    coco/bbox_mAP: 0.3260  coco/bbox_mAP_50: 0.6360  coco/bbox_mAP_75: 0.2950  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1630  coco/bbox_mAP_l: 0.3560  data_time: 0.0640  time: 0.1263
+2025/05/17 22:58:18 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_12.pth is removed
+2025/05/17 22:58:19 - mmengine - INFO - The best checkpoint with 0.3260 coco/bbox_mAP at 14 epoch is saved to best_coco_bbox_mAP_epoch_14.pth.
+2025/05/17 22:58:21 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:58:37 - mmengine - INFO - Epoch(train) [15][50/71]  lr: 2.0000e-03  eta: 0:06:35  time: 0.3712  data_time: 0.1264  memory: 1437  loss: 3.9288  loss_cls: 2.6491  loss_bbox: 1.2797
+2025/05/17 22:58:44 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:58:45 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:58:47 - mmengine - INFO - bbox_mAP_copypaste: 0.259 0.571 0.190 -1.000 0.138 0.295
+2025/05/17 22:58:47 - mmengine - INFO - Epoch(val) [15][7/7]    coco/bbox_mAP: 0.2590  coco/bbox_mAP_50: 0.5710  coco/bbox_mAP_75: 0.1900  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1380  coco/bbox_mAP_l: 0.2950  data_time: 0.0610  time: 0.1247
+2025/05/17 22:59:06 - mmengine - INFO - Epoch(train) [16][50/71]  lr: 2.0000e-03  eta: 0:06:08  time: 0.3640  data_time: 0.1254  memory: 1437  loss: 3.8837  loss_cls: 2.5946  loss_bbox: 1.2891
+2025/05/17 22:59:12 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:59:14 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:59:16 - mmengine - INFO - bbox_mAP_copypaste: 0.317 0.612 0.291 -1.000 0.164 0.357
+2025/05/17 22:59:16 - mmengine - INFO - Epoch(val) [16][7/7]    coco/bbox_mAP: 0.3170  coco/bbox_mAP_50: 0.6120  coco/bbox_mAP_75: 0.2910  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1640  coco/bbox_mAP_l: 0.3570  data_time: 0.0644  time: 0.1281
+2025/05/17 22:59:34 - mmengine - INFO - Epoch(train) [17][50/71]  lr: 2.0000e-04  eta: 0:05:42  time: 0.3679  data_time: 0.1289  memory: 1437  loss: 3.4165  loss_cls: 2.3207  loss_bbox: 1.0958
+2025/05/17 22:59:42 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 22:59:43 - mmengine - INFO - Evaluating bbox...
+2025/05/17 22:59:45 - mmengine - INFO - bbox_mAP_copypaste: 0.359 0.675 0.343 -1.000 0.201 0.391
+2025/05/17 22:59:45 - mmengine - INFO - Epoch(val) [17][7/7]    coco/bbox_mAP: 0.3590  coco/bbox_mAP_50: 0.6750  coco/bbox_mAP_75: 0.3430  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2010  coco/bbox_mAP_l: 0.3910  data_time: 0.0720  time: 0.1363
+2025/05/17 22:59:45 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_14.pth is removed
+2025/05/17 22:59:46 - mmengine - INFO - The best checkpoint with 0.3590 coco/bbox_mAP at 17 epoch is saved to best_coco_bbox_mAP_epoch_17.pth.
+2025/05/17 23:00:04 - mmengine - INFO - Epoch(train) [18][50/71]  lr: 2.0000e-04  eta: 0:05:15  time: 0.3483  data_time: 0.1087  memory: 1437  loss: 3.4128  loss_cls: 2.3069  loss_bbox: 1.1058
+2025/05/17 23:00:11 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:00:12 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:00:14 - mmengine - INFO - bbox_mAP_copypaste: 0.369 0.692 0.372 -1.000 0.209 0.400
+2025/05/17 23:00:14 - mmengine - INFO - Epoch(val) [18][7/7]    coco/bbox_mAP: 0.3690  coco/bbox_mAP_50: 0.6920  coco/bbox_mAP_75: 0.3720  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2090  coco/bbox_mAP_l: 0.4000  data_time: 0.0634  time: 0.1296
+2025/05/17 23:00:14 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_17.pth is removed
+2025/05/17 23:00:15 - mmengine - INFO - The best checkpoint with 0.3690 coco/bbox_mAP at 18 epoch is saved to best_coco_bbox_mAP_epoch_18.pth.
+2025/05/17 23:00:32 - mmengine - INFO - Epoch(train) [19][50/71]  lr: 2.0000e-04  eta: 0:04:49  time: 0.3537  data_time: 0.1117  memory: 1437  loss: 3.3962  loss_cls: 2.3158  loss_bbox: 1.0804
+2025/05/17 23:00:40 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:00:41 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:00:43 - mmengine - INFO - bbox_mAP_copypaste: 0.360 0.674 0.343 -1.000 0.193 0.390
+2025/05/17 23:00:43 - mmengine - INFO - Epoch(val) [19][7/7]    coco/bbox_mAP: 0.3600  coco/bbox_mAP_50: 0.6740  coco/bbox_mAP_75: 0.3430  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1930  coco/bbox_mAP_l: 0.3900  data_time: 0.0726  time: 0.1328
+2025/05/17 23:01:00 - mmengine - INFO - Epoch(train) [20][50/71]  lr: 2.0000e-04  eta: 0:04:23  time: 0.3418  data_time: 0.1050  memory: 1437  loss: 3.3764  loss_cls: 2.3101  loss_bbox: 1.0663
+2025/05/17 23:01:08 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:01:09 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:01:11 - mmengine - INFO - bbox_mAP_copypaste: 0.368 0.684 0.353 -1.000 0.208 0.399
+2025/05/17 23:01:11 - mmengine - INFO - Epoch(val) [20][7/7]    coco/bbox_mAP: 0.3680  coco/bbox_mAP_50: 0.6840  coco/bbox_mAP_75: 0.3530  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2080  coco/bbox_mAP_l: 0.3990  data_time: 0.0637  time: 0.1307
+2025/05/17 23:01:30 - mmengine - INFO - Epoch(train) [21][50/71]  lr: 2.0000e-04  eta: 0:03:57  time: 0.3697  data_time: 0.1260  memory: 1437  loss: 3.3199  loss_cls: 2.2595  loss_bbox: 1.0604
+2025/05/17 23:01:36 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:01:38 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:01:40 - mmengine - INFO - bbox_mAP_copypaste: 0.375 0.699 0.364 -1.000 0.214 0.405
+2025/05/17 23:01:40 - mmengine - INFO - Epoch(val) [21][7/7]    coco/bbox_mAP: 0.3750  coco/bbox_mAP_50: 0.6990  coco/bbox_mAP_75: 0.3640  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2140  coco/bbox_mAP_l: 0.4050  data_time: 0.0661  time: 0.1272
+2025/05/17 23:01:40 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\ssd300\best_coco_bbox_mAP_epoch_18.pth is removed
+2025/05/17 23:01:41 - mmengine - INFO - The best checkpoint with 0.3750 coco/bbox_mAP at 21 epoch is saved to best_coco_bbox_mAP_epoch_21.pth.
+2025/05/17 23:01:57 - mmengine - INFO - Epoch(train) [22][50/71]  lr: 2.0000e-04  eta: 0:03:31  time: 0.3332  data_time: 0.0980  memory: 1437  loss: 3.2506  loss_cls: 2.2325  loss_bbox: 1.0181
+2025/05/17 23:02:04 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:02:06 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:02:08 - mmengine - INFO - bbox_mAP_copypaste: 0.350 0.647 0.350 -1.000 0.201 0.380
+2025/05/17 23:02:08 - mmengine - INFO - Epoch(val) [22][7/7]    coco/bbox_mAP: 0.3500  coco/bbox_mAP_50: 0.6470  coco/bbox_mAP_75: 0.3500  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2010  coco/bbox_mAP_l: 0.3800  data_time: 0.0630  time: 0.1263
+2025/05/17 23:02:26 - mmengine - INFO - Epoch(train) [23][50/71]  lr: 2.0000e-05  eta: 0:03:05  time: 0.3604  data_time: 0.1167  memory: 1437  loss: 3.2314  loss_cls: 2.2164  loss_bbox: 1.0150
+2025/05/17 23:02:33 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:02:34 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:02:37 - mmengine - INFO - bbox_mAP_copypaste: 0.366 0.674 0.359 -1.000 0.217 0.396
+2025/05/17 23:02:37 - mmengine - INFO - Epoch(val) [23][7/7]    coco/bbox_mAP: 0.3660  coco/bbox_mAP_50: 0.6740  coco/bbox_mAP_75: 0.3590  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2170  coco/bbox_mAP_l: 0.3960  data_time: 0.0644  time: 0.1278
+2025/05/17 23:02:55 - mmengine - INFO - Epoch(train) [24][50/71]  lr: 2.0000e-05  eta: 0:02:40  time: 0.3622  data_time: 0.1227  memory: 1437  loss: 3.3444  loss_cls: 2.2670  loss_bbox: 1.0774
+2025/05/17 23:03:02 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:03:03 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:03:05 - mmengine - INFO - bbox_mAP_copypaste: 0.369 0.682 0.368 -1.000 0.225 0.399
+2025/05/17 23:03:05 - mmengine - INFO - Epoch(val) [24][7/7]    coco/bbox_mAP: 0.3690  coco/bbox_mAP_50: 0.6820  coco/bbox_mAP_75: 0.3680  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2250  coco/bbox_mAP_l: 0.3990  data_time: 0.0709  time: 0.1309
+2025/05/17 23:03:23 - mmengine - INFO - Epoch(train) [25][50/71]  lr: 2.0000e-05  eta: 0:02:14  time: 0.3567  data_time: 0.1159  memory: 1437  loss: 3.2712  loss_cls: 2.2305  loss_bbox: 1.0408
+2025/05/17 23:03:31 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:03:32 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:03:34 - mmengine - INFO - bbox_mAP_copypaste: 0.373 0.688 0.366 -1.000 0.215 0.404
+2025/05/17 23:03:34 - mmengine - INFO - Epoch(val) [25][7/7]    coco/bbox_mAP: 0.3730  coco/bbox_mAP_50: 0.6880  coco/bbox_mAP_75: 0.3660  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2150  coco/bbox_mAP_l: 0.4040  data_time: 0.0636  time: 0.1261
+2025/05/17 23:03:53 - mmengine - INFO - Epoch(train) [26][50/71]  lr: 2.0000e-05  eta: 0:01:49  time: 0.3816  data_time: 0.1393  memory: 1437  loss: 3.3247  loss_cls: 2.2581  loss_bbox: 1.0666
+2025/05/17 23:04:01 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:04:02 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:04:04 - mmengine - INFO - bbox_mAP_copypaste: 0.372 0.688 0.362 -1.000 0.216 0.402
+2025/05/17 23:04:04 - mmengine - INFO - Epoch(val) [26][7/7]    coco/bbox_mAP: 0.3720  coco/bbox_mAP_50: 0.6880  coco/bbox_mAP_75: 0.3620  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2160  coco/bbox_mAP_l: 0.4020  data_time: 0.0696  time: 0.1295
+2025/05/17 23:04:23 - mmengine - INFO - Epoch(train) [27][50/71]  lr: 2.0000e-05  eta: 0:01:24  time: 0.3699  data_time: 0.1274  memory: 1437  loss: 3.3234  loss_cls: 2.2460  loss_bbox: 1.0774
+2025/05/17 23:04:29 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:04:31 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:04:33 - mmengine - INFO - bbox_mAP_copypaste: 0.372 0.686 0.369 -1.000 0.222 0.402
+2025/05/17 23:04:33 - mmengine - INFO - Epoch(val) [27][7/7]    coco/bbox_mAP: 0.3720  coco/bbox_mAP_50: 0.6860  coco/bbox_mAP_75: 0.3690  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2220  coco/bbox_mAP_l: 0.4020  data_time: 0.0691  time: 0.1299
+2025/05/17 23:04:51 - mmengine - INFO - Epoch(train) [28][50/71]  lr: 2.0000e-05  eta: 0:00:58  time: 0.3510  data_time: 0.1076  memory: 1437  loss: 3.2635  loss_cls: 2.2323  loss_bbox: 1.0312
+2025/05/17 23:04:58 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:04:59 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:05:01 - mmengine - INFO - bbox_mAP_copypaste: 0.374 0.690 0.367 -1.000 0.219 0.404
+2025/05/17 23:05:01 - mmengine - INFO - Epoch(val) [28][7/7]    coco/bbox_mAP: 0.3740  coco/bbox_mAP_50: 0.6900  coco/bbox_mAP_75: 0.3670  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2190  coco/bbox_mAP_l: 0.4040  data_time: 0.0669  time: 0.1302
+2025/05/17 23:05:06 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:05:20 - mmengine - INFO - Epoch(train) [29][50/71]  lr: 2.0000e-05  eta: 0:00:32  time: 0.3710  data_time: 0.1276  memory: 1437  loss: 3.2466  loss_cls: 2.2072  loss_bbox: 1.0395
+2025/05/17 23:05:27 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:05:28 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:05:31 - mmengine - INFO - bbox_mAP_copypaste: 0.372 0.687 0.367 -1.000 0.218 0.403
+2025/05/17 23:05:31 - mmengine - INFO - Epoch(val) [29][7/7]    coco/bbox_mAP: 0.3720  coco/bbox_mAP_50: 0.6870  coco/bbox_mAP_75: 0.3670  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2180  coco/bbox_mAP_l: 0.4030  data_time: 0.0669  time: 0.1321
+2025/05/17 23:05:49 - mmengine - INFO - Epoch(train) [30][50/71]  lr: 2.0000e-05  eta: 0:00:07  time: 0.3690  data_time: 0.1300  memory: 1437  loss: 3.3032  loss_cls: 2.2311  loss_bbox: 1.0721
+2025/05/17 23:05:56 - mmengine - INFO - Exp name: ssd300_fs_bal_df_20250517_225106
+2025/05/17 23:05:56 - mmengine - INFO - Saving checkpoint at 30 epochs
+2025/05/17 23:05:58 - mmengine - INFO - Evaluating bbox...
+2025/05/17 23:06:01 - mmengine - INFO - bbox_mAP_copypaste: 0.375 0.693 0.371 -1.000 0.223 0.405
+2025/05/17 23:06:01 - mmengine - INFO - Epoch(val) [30][7/7]    coco/bbox_mAP: 0.3750  coco/bbox_mAP_50: 0.6930  coco/bbox_mAP_75: 0.3710  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2230  coco/bbox_mAP_l: 0.4050  data_time: 0.0643  time: 0.1325

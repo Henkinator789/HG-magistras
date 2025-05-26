@@ -1,0 +1,1512 @@
+2025/05/11 12:28:04 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: win32
+    Python: 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 1091947075
+    GPU 0: NVIDIA GeForce RTX 3070 Ti
+    CUDA_HOME: C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6
+    NVCC: Cuda compilation tools, release 12.6, V12.6.85
+    MSVC: Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34433 for x64
+    GCC: n/a
+    PyTorch: 2.1.0+cu118
+    PyTorch compiling details: PyTorch built with:
+  - C++ Version: 199711
+  - MSVC 192930151
+  - Intel(R) Math Kernel Library Version 2020.0.2 Product Build 20200624 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 2019
+  - LAPACK is enabled (usually provided by MKL)
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.7
+  - Magma 2.5.4
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/builder/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /bigobj /FS -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /utf-8 /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=OFF, TORCH_VERSION=2.1.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.0+cu118
+    OpenCV: 4.10.0
+    MMEngine: 0.10.5
+
+Runtime environment:
+    cudnn_benchmark: False
+    dist_cfg: {'backend': 'nccl'}
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    seed: 1091947075
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2025/05/11 12:28:05 - mmengine - INFO - Config:
+auto_scale_lr = dict(base_batch_size=64, enable=False)
+backend_args = None
+data_preprocessor = dict(
+    bgr_to_rgb=True,
+    mean=[
+        0,
+        0,
+        0,
+    ],
+    pad_size_divisor=32,
+    std=[
+        255.0,
+        255.0,
+        255.0,
+    ],
+    type='DetDataPreprocessor')
+data_root = 'D:/Repositories/test/data/larch_casebearer/'
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    checkpoint=dict(
+        interval=0, save_best='coco/bbox_mAP', type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='DetVisualizationHook'))
+default_scope = 'mmdet'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+launcher = 'none'
+load_from = None
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+metainfo = dict(
+    classes=(
+        'H',
+        'LD',
+        'HD',
+        'other',
+    ),
+    palette=[
+        (
+            0,
+            255,
+            0,
+        ),
+        (
+            255,
+            128,
+            0,
+        ),
+        (
+            255,
+            0,
+            0,
+        ),
+        (
+            0,
+            0,
+            255,
+        ),
+    ])
+model = dict(
+    backbone=dict(
+        depth=53,
+        init_cfg=dict(checkpoint='open-mmlab://darknet53', type='Pretrained'),
+        out_indices=(
+            3,
+            4,
+            5,
+        ),
+        type='Darknet'),
+    bbox_head=dict(
+        anchor_generator=dict(
+            base_sizes=[
+                [
+                    (
+                        116,
+                        90,
+                    ),
+                    (
+                        156,
+                        198,
+                    ),
+                    (
+                        373,
+                        326,
+                    ),
+                ],
+                [
+                    (
+                        30,
+                        61,
+                    ),
+                    (
+                        62,
+                        45,
+                    ),
+                    (
+                        59,
+                        119,
+                    ),
+                ],
+                [
+                    (
+                        10,
+                        13,
+                    ),
+                    (
+                        16,
+                        30,
+                    ),
+                    (
+                        33,
+                        23,
+                    ),
+                ],
+            ],
+            strides=[
+                32,
+                16,
+                8,
+            ],
+            type='YOLOAnchorGenerator'),
+        bbox_coder=dict(type='YOLOBBoxCoder'),
+        featmap_strides=[
+            32,
+            16,
+            8,
+        ],
+        in_channels=[
+            512,
+            256,
+            128,
+        ],
+        loss_cls=dict(
+            loss_weight=1.0,
+            reduction='sum',
+            type='CrossEntropyLoss',
+            use_sigmoid=True),
+        loss_conf=dict(
+            loss_weight=1.0,
+            reduction='sum',
+            type='CrossEntropyLoss',
+            use_sigmoid=True),
+        loss_wh=dict(loss_weight=2.0, reduction='sum', type='MSELoss'),
+        loss_xy=dict(
+            loss_weight=2.0,
+            reduction='sum',
+            type='CrossEntropyLoss',
+            use_sigmoid=True),
+        num_classes=4,
+        out_channels=[
+            1024,
+            512,
+            256,
+        ],
+        type='YOLOV3Head'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            0,
+            0,
+            0,
+        ],
+        pad_size_divisor=32,
+        std=[
+            255.0,
+            255.0,
+            255.0,
+        ],
+        type='DetDataPreprocessor'),
+    neck=dict(
+        in_channels=[
+            1024,
+            512,
+            256,
+        ],
+        num_scales=3,
+        out_channels=[
+            512,
+            256,
+            128,
+        ],
+        type='YOLOV3Neck'),
+    test_cfg=dict(
+        conf_thr=0.005,
+        max_per_img=100,
+        min_bbox_size=0,
+        nms=dict(iou_threshold=0.45, type='nms'),
+        nms_pre=1000,
+        score_thr=0.05),
+    train_cfg=dict(
+        assigner=dict(
+            min_pos_iou=0,
+            neg_iou_thr=0.5,
+            pos_iou_thr=0.5,
+            type='GridAssigner')),
+    type='YOLOV3')
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=35, norm_type=2),
+    optimizer=dict(lr=0.001, momentum=0.9, type='SGD', weight_decay=0.0005),
+    type='OptimWrapper')
+param_scheduler = [
+    dict(begin=0, by_epoch=False, end=2000, start_factor=0.1, type='LinearLR'),
+    dict(
+        by_epoch=True, gamma=0.1, milestones=[
+            218,
+            246,
+        ], type='MultiStepLR'),
+]
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='test/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='test/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                416,
+                416,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='D:/Repositories/test/data/larch_casebearer/test/annotations.json',
+    backend_args=None,
+    classwise=True,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+test_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        416,
+        416,
+    ), type='Resize'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+        ),
+        type='PackDetInputs'),
+]
+train_cfg = dict(max_epochs=30, type='EpochBasedTrainLoop', val_interval=1)
+train_dataloader = dict(
+    batch_sampler=dict(type='AspectRatioBatchSampler'),
+    batch_size=4,
+    dataset=dict(
+        dataset=dict(
+            ann_file='train/annotations.json',
+            backend_args=None,
+            data_prefix=dict(img='train/'),
+            data_root='D:/Repositories/test/data/larch_casebearer/',
+            metainfo=dict(
+                classes=(
+                    'H',
+                    'LD',
+                    'HD',
+                    'other',
+                ),
+                palette=[
+                    (
+                        0,
+                        255,
+                        0,
+                    ),
+                    (
+                        255,
+                        128,
+                        0,
+                    ),
+                    (
+                        255,
+                        0,
+                        0,
+                    ),
+                    (
+                        0,
+                        0,
+                        255,
+                    ),
+                ]),
+            pipeline=[
+                dict(backend_args=None, type='LoadImageFromFile'),
+                dict(type='LoadAnnotations', with_bbox=True),
+                dict(
+                    mean=[
+                        0,
+                        0,
+                        0,
+                    ],
+                    ratio_range=(
+                        1,
+                        2,
+                    ),
+                    to_rgb=True,
+                    type='Expand'),
+                dict(
+                    min_crop_size=0.3,
+                    min_ious=(
+                        0.4,
+                        0.5,
+                        0.6,
+                        0.7,
+                        0.8,
+                        0.9,
+                    ),
+                    type='MinIoURandomCrop'),
+                dict(
+                    keep_ratio=True,
+                    scale=[
+                        (
+                            320,
+                            320,
+                        ),
+                        (
+                            416,
+                            416,
+                        ),
+                    ],
+                    type='RandomResize'),
+                dict(type='PackDetInputs'),
+            ],
+            type='CocoDataset'),
+        oversample_thr=0.25,
+        type='ClassBalancedDataset'),
+    num_workers=1,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(mean=[
+        0,
+        0,
+        0,
+    ], ratio_range=(
+        1,
+        2,
+    ), to_rgb=True, type='Expand'),
+    dict(
+        min_crop_size=0.3,
+        min_ious=(
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+        ),
+        type='MinIoURandomCrop'),
+    dict(
+        keep_ratio=True,
+        scale=[
+            (
+                320,
+                320,
+            ),
+            (
+                416,
+                416,
+            ),
+        ],
+        type='RandomResize'),
+    dict(type='PackDetInputs'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='val/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='val/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                416,
+                416,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='D:/Repositories/test/data/larch_casebearer/val/annotations.json',
+    backend_args=None,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = '25-05-09/yolov3'
+
+2025/05/11 12:28:06 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2025/05/11 12:28:06 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2025/05/11 12:28:07 - mmengine - INFO - load model from: open-mmlab://darknet53
+2025/05/11 12:28:07 - mmengine - INFO - Loads checkpoint by openmmlab backend from path: open-mmlab://darknet53
+Name of parameter - Initialization information
+
+backbone.conv1.conv.weight - torch.Size([32, 3, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv1.bn.weight - torch.Size([32]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv1.bn.bias - torch.Size([32]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.conv.conv.weight - torch.Size([64, 32, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.conv.bn.weight - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.conv.bn.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv1.conv.weight - torch.Size([32, 64, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv1.bn.weight - torch.Size([32]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv1.bn.bias - torch.Size([32]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv2.conv.weight - torch.Size([64, 32, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv2.bn.weight - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv2.bn.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.conv.conv.weight - torch.Size([128, 64, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.conv.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.conv.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv1.conv.weight - torch.Size([64, 128, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv1.bn.weight - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv1.bn.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv2.conv.weight - torch.Size([128, 64, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv2.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv2.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv1.conv.weight - torch.Size([64, 128, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv1.bn.weight - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv1.bn.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv2.conv.weight - torch.Size([128, 64, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv2.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv2.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.conv.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.conv.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.conv.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.conv.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.conv.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.conv.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.conv.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.conv.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.conv.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv1.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv1.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv2.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv2.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv1.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv1.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv2.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv2.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv1.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv1.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv2.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv2.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv1.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv1.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv2.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv2.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+neck.detect1.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv2.bn.weight - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv2.bn.bias - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv3.conv.weight - torch.Size([512, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv3.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv3.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv4.conv.weight - torch.Size([1024, 512, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv4.bn.weight - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv4.bn.bias - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv5.conv.weight - torch.Size([512, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv5.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv5.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv1.conv.weight - torch.Size([256, 768, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv2.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv2.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv3.conv.weight - torch.Size([256, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv4.conv.weight - torch.Size([512, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv4.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv4.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv5.conv.weight - torch.Size([256, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv5.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv5.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.conv2.conv.weight - torch.Size([128, 256, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv1.conv.weight - torch.Size([128, 384, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv3.conv.weight - torch.Size([128, 256, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv3.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv3.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv4.conv.weight - torch.Size([256, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv4.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv4.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv5.conv.weight - torch.Size([128, 256, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv5.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv5.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.0.conv.weight - torch.Size([1024, 512, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_bridge.0.bn.weight - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.0.bn.bias - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.1.conv.weight - torch.Size([512, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_bridge.1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.2.conv.weight - torch.Size([256, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_bridge.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_pred.0.weight - torch.Size([27, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.0.bias - torch.Size([27]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.1.weight - torch.Size([27, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.1.bias - torch.Size([27]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.2.weight - torch.Size([27, 256, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.2.bias - torch.Size([27]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+2025/05/11 12:28:07 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2025/05/11 12:28:07 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2025/05/11 12:28:07 - mmengine - INFO - Checkpoints will be saved to D:\Repositories\test\25-05-09\yolov3.
+2025/05/11 12:28:26 - mmengine - INFO - Epoch(train)  [1][ 50/141]  lr: 1.2206e-04  eta: 0:25:18  time: 0.3632  data_time: 0.1803  memory: 2033  grad_norm: 7321.9242  loss: 4084.9084  loss_cls: 1329.1200  loss_conf: 1851.7105  loss_xy: 821.0592  loss_wh: 83.0187
+2025/05/11 12:28:39 - mmengine - INFO - Epoch(train)  [1][100/141]  lr: 1.4457e-04  eta: 0:21:43  time: 0.2680  data_time: 0.1026  memory: 2033  grad_norm: 7799.3560  loss: 3408.9369  loss_cls: 1066.4629  loss_conf: 1471.5187  loss_xy: 798.0017  loss_wh: 72.9536
+2025/05/11 12:28:50 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:28:59 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:29:01 - mmengine - INFO - bbox_mAP_copypaste: 0.048 0.155 0.015 -1.000 0.027 0.052
+2025/05/11 12:29:01 - mmengine - INFO - Epoch(val) [1][49/49]    coco/bbox_mAP: 0.0480  coco/bbox_mAP_50: 0.1550  coco/bbox_mAP_75: 0.0150  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0270  coco/bbox_mAP_l: 0.0520  data_time: 0.1746  time: 0.1932
+2025/05/11 12:29:02 - mmengine - INFO - The best checkpoint with 0.0480 coco/bbox_mAP at 1 epoch is saved to best_coco_bbox_mAP_epoch_1.pth.
+2025/05/11 12:29:16 - mmengine - INFO - Epoch(train)  [2][ 50/141]  lr: 1.8554e-04  eta: 0:19:47  time: 0.2745  data_time: 0.1098  memory: 2033  grad_norm: 5172.7454  loss: 2283.6262  loss_cls: 604.3605  loss_conf: 911.6691  loss_xy: 715.6246  loss_wh: 51.9720
+2025/05/11 12:29:30 - mmengine - INFO - Epoch(train)  [2][100/141]  lr: 2.0805e-04  eta: 0:19:16  time: 0.2746  data_time: 0.1099  memory: 2033  grad_norm: 5021.2198  loss: 2235.9165  loss_cls: 595.3087  loss_conf: 877.8367  loss_xy: 719.3207  loss_wh: 43.4504
+2025/05/11 12:29:40 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:29:41 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:29:43 - mmengine - INFO - bbox_mAP_copypaste: 0.061 0.152 0.031 -1.000 0.065 0.064
+2025/05/11 12:29:43 - mmengine - INFO - Epoch(val) [2][49/49]    coco/bbox_mAP: 0.0610  coco/bbox_mAP_50: 0.1520  coco/bbox_mAP_75: 0.0310  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0650  coco/bbox_mAP_l: 0.0640  data_time: 0.0038  time: 0.0198
+2025/05/11 12:29:43 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_1.pth is removed
+2025/05/11 12:29:44 - mmengine - INFO - The best checkpoint with 0.0610 coco/bbox_mAP at 2 epoch is saved to best_coco_bbox_mAP_epoch_2.pth.
+2025/05/11 12:29:58 - mmengine - INFO - Epoch(train)  [3][ 50/141]  lr: 2.4902e-04  eta: 0:18:26  time: 0.2704  data_time: 0.1011  memory: 2033  grad_norm: 4950.3927  loss: 2205.4749  loss_cls: 590.9918  loss_conf: 830.2243  loss_xy: 742.9435  loss_wh: 41.3153
+2025/05/11 12:30:12 - mmengine - INFO - Epoch(train)  [3][100/141]  lr: 2.7154e-04  eta: 0:18:14  time: 0.2866  data_time: 0.1245  memory: 2033  grad_norm: 5042.5027  loss: 2078.7270  loss_cls: 540.0341  loss_conf: 787.2221  loss_xy: 712.2795  loss_wh: 39.1913
+2025/05/11 12:30:23 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:30:24 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:30:25 - mmengine - INFO - bbox_mAP_copypaste: 0.070 0.180 0.035 -1.000 0.038 0.074
+2025/05/11 12:30:25 - mmengine - INFO - Epoch(val) [3][49/49]    coco/bbox_mAP: 0.0700  coco/bbox_mAP_50: 0.1800  coco/bbox_mAP_75: 0.0350  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0380  coco/bbox_mAP_l: 0.0740  data_time: 0.0033  time: 0.0198
+2025/05/11 12:30:25 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_2.pth is removed
+2025/05/11 12:30:27 - mmengine - INFO - The best checkpoint with 0.0700 coco/bbox_mAP at 3 epoch is saved to best_coco_bbox_mAP_epoch_3.pth.
+2025/05/11 12:30:40 - mmengine - INFO - Epoch(train)  [4][ 50/141]  lr: 3.1251e-04  eta: 0:17:35  time: 0.2736  data_time: 0.1111  memory: 2033  grad_norm: 5106.8897  loss: 1912.2091  loss_cls: 483.8407  loss_conf: 717.8332  loss_xy: 673.6379  loss_wh: 36.8974
+2025/05/11 12:30:54 - mmengine - INFO - Epoch(train)  [4][100/141]  lr: 3.3502e-04  eta: 0:17:17  time: 0.2713  data_time: 0.1089  memory: 2033  grad_norm: 5254.3341  loss: 1912.9806  loss_cls: 455.3944  loss_conf: 720.7030  loss_xy: 698.8027  loss_wh: 38.0805
+2025/05/11 12:31:05 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:31:06 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:31:08 - mmengine - INFO - bbox_mAP_copypaste: 0.109 0.297 0.043 -1.000 0.056 0.117
+2025/05/11 12:31:08 - mmengine - INFO - Epoch(val) [4][49/49]    coco/bbox_mAP: 0.1090  coco/bbox_mAP_50: 0.2970  coco/bbox_mAP_75: 0.0430  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0560  coco/bbox_mAP_l: 0.1170  data_time: 0.0042  time: 0.0195
+2025/05/11 12:31:08 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_3.pth is removed
+2025/05/11 12:31:09 - mmengine - INFO - The best checkpoint with 0.1090 coco/bbox_mAP at 4 epoch is saved to best_coco_bbox_mAP_epoch_4.pth.
+2025/05/11 12:31:23 - mmengine - INFO - Epoch(train)  [5][ 50/141]  lr: 3.7599e-04  eta: 0:16:50  time: 0.2782  data_time: 0.1129  memory: 2033  grad_norm: 5375.1959  loss: 1751.0150  loss_cls: 392.9794  loss_conf: 656.4568  loss_xy: 663.1591  loss_wh: 38.4197
+2025/05/11 12:31:36 - mmengine - INFO - Epoch(train)  [5][100/141]  lr: 3.9850e-04  eta: 0:16:33  time: 0.2694  data_time: 0.1060  memory: 2033  grad_norm: 4986.7846  loss: 1740.6626  loss_cls: 371.7507  loss_conf: 662.2888  loss_xy: 674.2221  loss_wh: 32.4010
+2025/05/11 12:31:47 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:31:48 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:31:50 - mmengine - INFO - bbox_mAP_copypaste: 0.137 0.394 0.050 -1.000 0.134 0.142
+2025/05/11 12:31:50 - mmengine - INFO - Epoch(val) [5][49/49]    coco/bbox_mAP: 0.1370  coco/bbox_mAP_50: 0.3940  coco/bbox_mAP_75: 0.0500  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1340  coco/bbox_mAP_l: 0.1420  data_time: 0.0037  time: 0.0201
+2025/05/11 12:31:50 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_4.pth is removed
+2025/05/11 12:31:51 - mmengine - INFO - The best checkpoint with 0.1370 coco/bbox_mAP at 5 epoch is saved to best_coco_bbox_mAP_epoch_5.pth.
+2025/05/11 12:32:05 - mmengine - INFO - Epoch(train)  [6][ 50/141]  lr: 4.3947e-04  eta: 0:16:04  time: 0.2751  data_time: 0.1114  memory: 2033  grad_norm: 5402.3131  loss: 1766.6176  loss_cls: 375.4975  loss_conf: 661.8751  loss_xy: 690.6411  loss_wh: 38.6040
+2025/05/11 12:32:19 - mmengine - INFO - Epoch(train)  [6][100/141]  lr: 4.6198e-04  eta: 0:15:52  time: 0.2861  data_time: 0.1264  memory: 2033  grad_norm: 4923.2866  loss: 1661.3172  loss_cls: 306.2019  loss_conf: 651.7879  loss_xy: 671.4829  loss_wh: 31.8445
+2025/05/11 12:32:31 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:32:32 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:32:33 - mmengine - INFO - bbox_mAP_copypaste: 0.138 0.319 0.086 -1.000 0.135 0.142
+2025/05/11 12:32:33 - mmengine - INFO - Epoch(val) [6][49/49]    coco/bbox_mAP: 0.1380  coco/bbox_mAP_50: 0.3190  coco/bbox_mAP_75: 0.0860  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1350  coco/bbox_mAP_l: 0.1420  data_time: 0.0044  time: 0.0201
+2025/05/11 12:32:33 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_5.pth is removed
+2025/05/11 12:32:34 - mmengine - INFO - The best checkpoint with 0.1380 coco/bbox_mAP at 6 epoch is saved to best_coco_bbox_mAP_epoch_6.pth.
+2025/05/11 12:32:48 - mmengine - INFO - Epoch(train)  [7][ 50/141]  lr: 5.0295e-04  eta: 0:15:26  time: 0.2729  data_time: 0.1057  memory: 2033  grad_norm: 4819.8069  loss: 1697.5164  loss_cls: 329.5843  loss_conf: 640.3100  loss_xy: 698.5002  loss_wh: 29.1219
+2025/05/11 12:33:02 - mmengine - INFO - Epoch(train)  [7][100/141]  lr: 5.2546e-04  eta: 0:15:13  time: 0.2841  data_time: 0.1228  memory: 2033  grad_norm: 4972.5349  loss: 1628.0740  loss_cls: 311.1698  loss_conf: 619.1049  loss_xy: 664.7739  loss_wh: 33.0254
+2025/05/11 12:33:14 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:33:15 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:33:17 - mmengine - INFO - bbox_mAP_copypaste: 0.189 0.398 0.142 -1.000 0.180 0.189
+2025/05/11 12:33:17 - mmengine - INFO - Epoch(val) [7][49/49]    coco/bbox_mAP: 0.1890  coco/bbox_mAP_50: 0.3980  coco/bbox_mAP_75: 0.1420  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1800  coco/bbox_mAP_l: 0.1890  data_time: 0.0035  time: 0.0200
+2025/05/11 12:33:17 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_6.pth is removed
+2025/05/11 12:33:18 - mmengine - INFO - The best checkpoint with 0.1890 coco/bbox_mAP at 7 epoch is saved to best_coco_bbox_mAP_epoch_7.pth.
+2025/05/11 12:33:22 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:33:32 - mmengine - INFO - Epoch(train)  [8][ 50/141]  lr: 5.6643e-04  eta: 0:14:51  time: 0.2898  data_time: 0.1239  memory: 2033  grad_norm: 4602.8093  loss: 1599.7436  loss_cls: 293.1492  loss_conf: 619.1092  loss_xy: 656.7170  loss_wh: 30.7682
+2025/05/11 12:33:46 - mmengine - INFO - Epoch(train)  [8][100/141]  lr: 5.8894e-04  eta: 0:14:37  time: 0.2773  data_time: 0.1113  memory: 2033  grad_norm: 4775.7377  loss: 1698.0006  loss_cls: 332.7664  loss_conf: 624.4063  loss_xy: 709.6470  loss_wh: 31.1809
+2025/05/11 12:33:57 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:33:58 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:34:00 - mmengine - INFO - bbox_mAP_copypaste: 0.161 0.424 0.060 -1.000 0.167 0.161
+2025/05/11 12:34:00 - mmengine - INFO - Epoch(val) [8][49/49]    coco/bbox_mAP: 0.1610  coco/bbox_mAP_50: 0.4240  coco/bbox_mAP_75: 0.0600  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1670  coco/bbox_mAP_l: 0.1610  data_time: 0.0030  time: 0.0197
+2025/05/11 12:34:13 - mmengine - INFO - Epoch(train)  [9][ 50/141]  lr: 6.2991e-04  eta: 0:14:09  time: 0.2702  data_time: 0.1090  memory: 2033  grad_norm: 4358.9835  loss: 1532.3112  loss_cls: 275.6337  loss_conf: 576.3802  loss_xy: 641.3066  loss_wh: 38.9907
+2025/05/11 12:34:27 - mmengine - INFO - Epoch(train)  [9][100/141]  lr: 6.5243e-04  eta: 0:13:55  time: 0.2809  data_time: 0.1204  memory: 2033  grad_norm: 4325.4222  loss: 1605.2525  loss_cls: 285.8266  loss_conf: 601.7265  loss_xy: 688.5405  loss_wh: 29.1589
+2025/05/11 12:34:38 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:34:39 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:34:41 - mmengine - INFO - bbox_mAP_copypaste: 0.207 0.472 0.144 -1.000 0.154 0.219
+2025/05/11 12:34:41 - mmengine - INFO - Epoch(val) [9][49/49]    coco/bbox_mAP: 0.2070  coco/bbox_mAP_50: 0.4720  coco/bbox_mAP_75: 0.1440  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1540  coco/bbox_mAP_l: 0.2190  data_time: 0.0040  time: 0.0199
+2025/05/11 12:34:41 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_7.pth is removed
+2025/05/11 12:34:42 - mmengine - INFO - The best checkpoint with 0.2070 coco/bbox_mAP at 9 epoch is saved to best_coco_bbox_mAP_epoch_9.pth.
+2025/05/11 12:34:56 - mmengine - INFO - Epoch(train) [10][ 50/141]  lr: 6.9340e-04  eta: 0:13:30  time: 0.2871  data_time: 0.1208  memory: 2033  grad_norm: 4221.4302  loss: 1588.4893  loss_cls: 263.3950  loss_conf: 608.6735  loss_xy: 689.2990  loss_wh: 27.1219
+2025/05/11 12:35:11 - mmengine - INFO - Epoch(train) [10][100/141]  lr: 7.1591e-04  eta: 0:13:18  time: 0.2899  data_time: 0.1274  memory: 2033  grad_norm: 4469.3807  loss: 1599.4406  loss_cls: 284.4822  loss_conf: 594.8263  loss_xy: 681.9339  loss_wh: 38.1982
+2025/05/11 12:35:22 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:35:23 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:35:25 - mmengine - INFO - bbox_mAP_copypaste: 0.259 0.539 0.195 -1.000 0.196 0.272
+2025/05/11 12:35:25 - mmengine - INFO - Epoch(val) [10][49/49]    coco/bbox_mAP: 0.2590  coco/bbox_mAP_50: 0.5390  coco/bbox_mAP_75: 0.1950  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1960  coco/bbox_mAP_l: 0.2720  data_time: 0.0027  time: 0.0195
+2025/05/11 12:35:25 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_9.pth is removed
+2025/05/11 12:35:26 - mmengine - INFO - The best checkpoint with 0.2590 coco/bbox_mAP at 10 epoch is saved to best_coco_bbox_mAP_epoch_10.pth.
+2025/05/11 12:35:40 - mmengine - INFO - Epoch(train) [11][ 50/141]  lr: 7.5688e-04  eta: 0:12:52  time: 0.2767  data_time: 0.1121  memory: 2033  grad_norm: 3837.5724  loss: 1518.7633  loss_cls: 238.3340  loss_conf: 588.0245  loss_xy: 661.4882  loss_wh: 30.9167
+2025/05/11 12:35:54 - mmengine - INFO - Epoch(train) [11][100/141]  lr: 7.7939e-04  eta: 0:12:39  time: 0.2849  data_time: 0.1191  memory: 2033  grad_norm: 4041.7148  loss: 1698.2873  loss_cls: 280.8161  loss_conf: 645.3051  loss_xy: 734.7585  loss_wh: 37.4077
+2025/05/11 12:36:05 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:36:06 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:36:08 - mmengine - INFO - bbox_mAP_copypaste: 0.166 0.375 0.109 -1.000 0.142 0.170
+2025/05/11 12:36:08 - mmengine - INFO - Epoch(val) [11][49/49]    coco/bbox_mAP: 0.1660  coco/bbox_mAP_50: 0.3750  coco/bbox_mAP_75: 0.1090  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1420  coco/bbox_mAP_l: 0.1700  data_time: 0.0045  time: 0.0203
+2025/05/11 12:36:21 - mmengine - INFO - Epoch(train) [12][ 50/141]  lr: 8.2036e-04  eta: 0:12:12  time: 0.2691  data_time: 0.1074  memory: 2033  grad_norm: 3656.4944  loss: 1500.9495  loss_cls: 237.0665  loss_conf: 569.4233  loss_xy: 664.4272  loss_wh: 30.0325
+2025/05/11 12:36:36 - mmengine - INFO - Epoch(train) [12][100/141]  lr: 8.4287e-04  eta: 0:11:58  time: 0.2854  data_time: 0.1249  memory: 2033  grad_norm: 3759.7224  loss: 1498.3470  loss_cls: 251.8844  loss_conf: 562.3606  loss_xy: 653.7440  loss_wh: 30.3579
+2025/05/11 12:36:47 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:36:48 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:36:49 - mmengine - INFO - bbox_mAP_copypaste: 0.173 0.383 0.115 -1.000 0.124 0.183
+2025/05/11 12:36:49 - mmengine - INFO - Epoch(val) [12][49/49]    coco/bbox_mAP: 0.1730  coco/bbox_mAP_50: 0.3830  coco/bbox_mAP_75: 0.1150  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1240  coco/bbox_mAP_l: 0.1830  data_time: 0.0036  time: 0.0206
+2025/05/11 12:37:03 - mmengine - INFO - Epoch(train) [13][ 50/141]  lr: 8.8384e-04  eta: 0:11:32  time: 0.2733  data_time: 0.1061  memory: 2033  grad_norm: 3616.9168  loss: 1561.8548  loss_cls: 247.3621  loss_conf: 585.9869  loss_xy: 692.3399  loss_wh: 36.1659
+2025/05/11 12:37:16 - mmengine - INFO - Epoch(train) [13][100/141]  lr: 9.0635e-04  eta: 0:11:18  time: 0.2729  data_time: 0.1092  memory: 2033  grad_norm: 4162.3264  loss: 1623.3442  loss_cls: 291.3830  loss_conf: 594.7342  loss_xy: 697.0862  loss_wh: 40.1408
+2025/05/11 12:37:28 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:37:29 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:37:30 - mmengine - INFO - bbox_mAP_copypaste: 0.291 0.588 0.240 -1.000 0.203 0.307
+2025/05/11 12:37:30 - mmengine - INFO - Epoch(val) [13][49/49]    coco/bbox_mAP: 0.2910  coco/bbox_mAP_50: 0.5880  coco/bbox_mAP_75: 0.2400  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2030  coco/bbox_mAP_l: 0.3070  data_time: 0.0029  time: 0.0197
+2025/05/11 12:37:30 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_10.pth is removed
+2025/05/11 12:37:31 - mmengine - INFO - The best checkpoint with 0.2910 coco/bbox_mAP at 13 epoch is saved to best_coco_bbox_mAP_epoch_13.pth.
+2025/05/11 12:37:46 - mmengine - INFO - Epoch(train) [14][ 50/141]  lr: 9.4732e-04  eta: 0:10:52  time: 0.2818  data_time: 0.1107  memory: 2033  grad_norm: 3596.2840  loss: 1537.6386  loss_cls: 238.2058  loss_conf: 580.8072  loss_xy: 688.0159  loss_wh: 30.6096
+2025/05/11 12:37:59 - mmengine - INFO - Epoch(train) [14][100/141]  lr: 9.6983e-04  eta: 0:10:38  time: 0.2722  data_time: 0.1102  memory: 2033  grad_norm: 3736.9522  loss: 1527.5485  loss_cls: 250.4075  loss_conf: 569.7973  loss_xy: 676.7598  loss_wh: 30.5839
+2025/05/11 12:38:11 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:38:12 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:38:13 - mmengine - INFO - bbox_mAP_copypaste: 0.236 0.544 0.164 -1.000 0.186 0.250
+2025/05/11 12:38:13 - mmengine - INFO - Epoch(val) [14][49/49]    coco/bbox_mAP: 0.2360  coco/bbox_mAP_50: 0.5440  coco/bbox_mAP_75: 0.1640  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1860  coco/bbox_mAP_l: 0.2500  data_time: 0.0038  time: 0.0201
+2025/05/11 12:38:20 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:38:27 - mmengine - INFO - Epoch(train) [15][ 50/141]  lr: 1.0000e-03  eta: 0:10:13  time: 0.2749  data_time: 0.1065  memory: 2033  grad_norm: 3364.5742  loss: 1516.0227  loss_cls: 246.1856  loss_conf: 555.3155  loss_xy: 683.1163  loss_wh: 31.4053
+2025/05/11 12:38:40 - mmengine - INFO - Epoch(train) [15][100/141]  lr: 1.0000e-03  eta: 0:09:58  time: 0.2695  data_time: 0.1092  memory: 2033  grad_norm: 3466.1087  loss: 1491.8324  loss_cls: 229.1078  loss_conf: 552.4607  loss_xy: 672.7655  loss_wh: 37.4984
+2025/05/11 12:38:52 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:38:53 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:38:54 - mmengine - INFO - bbox_mAP_copypaste: 0.189 0.514 0.074 -1.000 0.138 0.207
+2025/05/11 12:38:54 - mmengine - INFO - Epoch(val) [15][49/49]    coco/bbox_mAP: 0.1890  coco/bbox_mAP_50: 0.5140  coco/bbox_mAP_75: 0.0740  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1380  coco/bbox_mAP_l: 0.2070  data_time: 0.0037  time: 0.0202
+2025/05/11 12:39:08 - mmengine - INFO - Epoch(train) [16][ 50/141]  lr: 1.0000e-03  eta: 0:09:33  time: 0.2715  data_time: 0.1064  memory: 2033  grad_norm: 3496.7754  loss: 1495.8586  loss_cls: 236.6470  loss_conf: 544.9038  loss_xy: 663.1374  loss_wh: 51.1704
+2025/05/11 12:39:22 - mmengine - INFO - Epoch(train) [16][100/141]  lr: 1.0000e-03  eta: 0:09:19  time: 0.2810  data_time: 0.1198  memory: 2033  grad_norm: 3385.6988  loss: 1507.1779  loss_cls: 247.1036  loss_conf: 551.2748  loss_xy: 677.4417  loss_wh: 31.3578
+2025/05/11 12:39:33 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:39:34 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:39:35 - mmengine - INFO - bbox_mAP_copypaste: 0.278 0.568 0.221 -1.000 0.186 0.302
+2025/05/11 12:39:35 - mmengine - INFO - Epoch(val) [16][49/49]    coco/bbox_mAP: 0.2780  coco/bbox_mAP_50: 0.5680  coco/bbox_mAP_75: 0.2210  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1860  coco/bbox_mAP_l: 0.3020  data_time: 0.0035  time: 0.0210
+2025/05/11 12:39:49 - mmengine - INFO - Epoch(train) [17][ 50/141]  lr: 1.0000e-03  eta: 0:08:53  time: 0.2646  data_time: 0.0969  memory: 2033  grad_norm: 3286.2952  loss: 1487.9499  loss_cls: 240.4582  loss_conf: 546.0598  loss_xy: 670.3195  loss_wh: 31.1124
+2025/05/11 12:40:03 - mmengine - INFO - Epoch(train) [17][100/141]  lr: 1.0000e-03  eta: 0:08:39  time: 0.2857  data_time: 0.1229  memory: 2033  grad_norm: 3217.1554  loss: 1466.6640  loss_cls: 234.3224  loss_conf: 536.1963  loss_xy: 662.9899  loss_wh: 33.1554
+2025/05/11 12:40:14 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:40:15 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:40:16 - mmengine - INFO - bbox_mAP_copypaste: 0.202 0.449 0.147 -1.000 0.128 0.226
+2025/05/11 12:40:16 - mmengine - INFO - Epoch(val) [17][49/49]    coco/bbox_mAP: 0.2020  coco/bbox_mAP_50: 0.4490  coco/bbox_mAP_75: 0.1470  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1280  coco/bbox_mAP_l: 0.2260  data_time: 0.0041  time: 0.0200
+2025/05/11 12:40:30 - mmengine - INFO - Epoch(train) [18][ 50/141]  lr: 1.0000e-03  eta: 0:08:13  time: 0.2669  data_time: 0.1021  memory: 2033  grad_norm: 3186.1972  loss: 1507.5755  loss_cls: 235.5042  loss_conf: 552.7135  loss_xy: 688.9742  loss_wh: 30.3837
+2025/05/11 12:40:44 - mmengine - INFO - Epoch(train) [18][100/141]  lr: 1.0000e-03  eta: 0:08:00  time: 0.2790  data_time: 0.1172  memory: 2033  grad_norm: 3106.8361  loss: 1438.7498  loss_cls: 214.5205  loss_conf: 539.4418  loss_xy: 655.1216  loss_wh: 29.6660
+2025/05/11 12:40:54 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:40:55 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:40:57 - mmengine - INFO - bbox_mAP_copypaste: 0.313 0.623 0.256 -1.000 0.237 0.333
+2025/05/11 12:40:57 - mmengine - INFO - Epoch(val) [18][49/49]    coco/bbox_mAP: 0.3130  coco/bbox_mAP_50: 0.6230  coco/bbox_mAP_75: 0.2560  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2370  coco/bbox_mAP_l: 0.3330  data_time: 0.0034  time: 0.0195
+2025/05/11 12:40:57 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_13.pth is removed
+2025/05/11 12:40:58 - mmengine - INFO - The best checkpoint with 0.3130 coco/bbox_mAP at 18 epoch is saved to best_coco_bbox_mAP_epoch_18.pth.
+2025/05/11 12:41:12 - mmengine - INFO - Epoch(train) [19][ 50/141]  lr: 1.0000e-03  eta: 0:07:34  time: 0.2756  data_time: 0.1082  memory: 2033  grad_norm: 2983.7024  loss: 1422.5360  loss_cls: 220.2026  loss_conf: 522.1559  loss_xy: 655.0777  loss_wh: 25.0997
+2025/05/11 12:41:26 - mmengine - INFO - Epoch(train) [19][100/141]  lr: 1.0000e-03  eta: 0:07:20  time: 0.2743  data_time: 0.1134  memory: 2033  grad_norm: 2871.6537  loss: 1404.7579  loss_cls: 204.8259  loss_conf: 522.3004  loss_xy: 644.5930  loss_wh: 33.0387
+2025/05/11 12:41:36 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:41:37 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:41:39 - mmengine - INFO - bbox_mAP_copypaste: 0.331 0.661 0.271 -1.000 0.233 0.348
+2025/05/11 12:41:39 - mmengine - INFO - Epoch(val) [19][49/49]    coco/bbox_mAP: 0.3310  coco/bbox_mAP_50: 0.6610  coco/bbox_mAP_75: 0.2710  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2330  coco/bbox_mAP_l: 0.3480  data_time: 0.0040  time: 0.0200
+2025/05/11 12:41:39 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_18.pth is removed
+2025/05/11 12:41:40 - mmengine - INFO - The best checkpoint with 0.3310 coco/bbox_mAP at 19 epoch is saved to best_coco_bbox_mAP_epoch_19.pth.
+2025/05/11 12:41:54 - mmengine - INFO - Epoch(train) [20][ 50/141]  lr: 1.0000e-03  eta: 0:06:55  time: 0.2811  data_time: 0.1133  memory: 2033  grad_norm: 3021.7958  loss: 1435.2571  loss_cls: 219.1020  loss_conf: 522.6926  loss_xy: 666.1468  loss_wh: 27.3157
+2025/05/11 12:42:09 - mmengine - INFO - Epoch(train) [20][100/141]  lr: 1.0000e-03  eta: 0:06:41  time: 0.2877  data_time: 0.1164  memory: 2033  grad_norm: 3046.3658  loss: 1484.9445  loss_cls: 226.2057  loss_conf: 544.8694  loss_xy: 686.7332  loss_wh: 27.1361
+2025/05/11 12:42:20 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:42:22 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:42:23 - mmengine - INFO - bbox_mAP_copypaste: 0.328 0.642 0.290 -1.000 0.234 0.351
+2025/05/11 12:42:23 - mmengine - INFO - Epoch(val) [20][49/49]    coco/bbox_mAP: 0.3280  coco/bbox_mAP_50: 0.6420  coco/bbox_mAP_75: 0.2900  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2340  coco/bbox_mAP_l: 0.3510  data_time: 0.0039  time: 0.0205
+2025/05/11 12:42:37 - mmengine - INFO - Epoch(train) [21][ 50/141]  lr: 1.0000e-03  eta: 0:06:16  time: 0.2757  data_time: 0.1039  memory: 2033  grad_norm: 2786.5406  loss: 1436.7688  loss_cls: 210.7594  loss_conf: 525.1777  loss_xy: 675.8553  loss_wh: 24.9764
+2025/05/11 12:42:50 - mmengine - INFO - Epoch(train) [21][100/141]  lr: 1.0000e-03  eta: 0:06:02  time: 0.2716  data_time: 0.1056  memory: 2033  grad_norm: 2786.5147  loss: 1350.8420  loss_cls: 182.6176  loss_conf: 500.0289  loss_xy: 641.5664  loss_wh: 26.6291
+2025/05/11 12:43:02 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:43:03 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:43:05 - mmengine - INFO - bbox_mAP_copypaste: 0.244 0.561 0.169 -1.000 0.119 0.263
+2025/05/11 12:43:05 - mmengine - INFO - Epoch(val) [21][49/49]    coco/bbox_mAP: 0.2440  coco/bbox_mAP_50: 0.5610  coco/bbox_mAP_75: 0.1690  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1190  coco/bbox_mAP_l: 0.2630  data_time: 0.0038  time: 0.0206
+2025/05/11 12:43:16 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:43:19 - mmengine - INFO - Epoch(train) [22][ 50/141]  lr: 1.0000e-03  eta: 0:05:37  time: 0.2852  data_time: 0.1077  memory: 2033  grad_norm: 3128.6616  loss: 1558.4219  loss_cls: 247.0368  loss_conf: 556.7760  loss_xy: 726.9927  loss_wh: 27.6164
+2025/05/11 12:43:32 - mmengine - INFO - Epoch(train) [22][100/141]  lr: 1.0000e-03  eta: 0:05:23  time: 0.2708  data_time: 0.1050  memory: 2033  grad_norm: 2775.4244  loss: 1344.3566  loss_cls: 182.5349  loss_conf: 498.3162  loss_xy: 641.4509  loss_wh: 22.0545
+2025/05/11 12:43:44 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:43:45 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:43:46 - mmengine - INFO - bbox_mAP_copypaste: 0.310 0.595 0.283 -1.000 0.235 0.326
+2025/05/11 12:43:46 - mmengine - INFO - Epoch(val) [22][49/49]    coco/bbox_mAP: 0.3100  coco/bbox_mAP_50: 0.5950  coco/bbox_mAP_75: 0.2830  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2350  coco/bbox_mAP_l: 0.3260  data_time: 0.0047  time: 0.0203
+2025/05/11 12:44:01 - mmengine - INFO - Epoch(train) [23][ 50/141]  lr: 1.0000e-03  eta: 0:04:58  time: 0.2941  data_time: 0.1170  memory: 2033  grad_norm: 2757.3049  loss: 1428.4743  loss_cls: 219.0830  loss_conf: 512.7838  loss_xy: 671.8135  loss_wh: 24.7940
+2025/05/11 12:44:15 - mmengine - INFO - Epoch(train) [23][100/141]  lr: 1.0000e-03  eta: 0:04:45  time: 0.2889  data_time: 0.1179  memory: 2033  grad_norm: 2715.5665  loss: 1424.1677  loss_cls: 202.8317  loss_conf: 518.7408  loss_xy: 677.6535  loss_wh: 24.9417
+2025/05/11 12:44:27 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:44:28 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:44:29 - mmengine - INFO - bbox_mAP_copypaste: 0.276 0.554 0.230 -1.000 0.168 0.296
+2025/05/11 12:44:29 - mmengine - INFO - Epoch(val) [23][49/49]    coco/bbox_mAP: 0.2760  coco/bbox_mAP_50: 0.5540  coco/bbox_mAP_75: 0.2300  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1680  coco/bbox_mAP_l: 0.2960  data_time: 0.0045  time: 0.0204
+2025/05/11 12:44:44 - mmengine - INFO - Epoch(train) [24][ 50/141]  lr: 1.0000e-03  eta: 0:04:20  time: 0.2893  data_time: 0.1190  memory: 2033  grad_norm: 2546.8154  loss: 1337.9498  loss_cls: 191.0911  loss_conf: 486.7115  loss_xy: 635.4983  loss_wh: 24.6489
+2025/05/11 12:44:57 - mmengine - INFO - Epoch(train) [24][100/141]  lr: 1.0000e-03  eta: 0:04:06  time: 0.2715  data_time: 0.1050  memory: 2033  grad_norm: 2694.5743  loss: 1372.3460  loss_cls: 189.8521  loss_conf: 504.6061  loss_xy: 652.4686  loss_wh: 25.4192
+2025/05/11 12:45:09 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:45:10 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:45:11 - mmengine - INFO - bbox_mAP_copypaste: 0.359 0.682 0.325 -1.000 0.210 0.382
+2025/05/11 12:45:11 - mmengine - INFO - Epoch(val) [24][49/49]    coco/bbox_mAP: 0.3590  coco/bbox_mAP_50: 0.6820  coco/bbox_mAP_75: 0.3250  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2100  coco/bbox_mAP_l: 0.3820  data_time: 0.0040  time: 0.0212
+2025/05/11 12:45:12 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_19.pth is removed
+2025/05/11 12:45:13 - mmengine - INFO - The best checkpoint with 0.3590 coco/bbox_mAP at 24 epoch is saved to best_coco_bbox_mAP_epoch_24.pth.
+2025/05/11 12:45:27 - mmengine - INFO - Epoch(train) [25][ 50/141]  lr: 1.0000e-03  eta: 0:03:40  time: 0.2781  data_time: 0.1033  memory: 2033  grad_norm: 2630.8848  loss: 1395.7031  loss_cls: 203.8931  loss_conf: 504.4333  loss_xy: 661.4379  loss_wh: 25.9389
+2025/05/11 12:45:41 - mmengine - INFO - Epoch(train) [25][100/141]  lr: 1.0000e-03  eta: 0:03:27  time: 0.2886  data_time: 0.1185  memory: 2033  grad_norm: 2629.1771  loss: 1423.6376  loss_cls: 185.8259  loss_conf: 520.9867  loss_xy: 692.0422  loss_wh: 24.7827
+2025/05/11 12:45:53 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:45:54 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:45:55 - mmengine - INFO - bbox_mAP_copypaste: 0.373 0.679 0.367 -1.000 0.228 0.396
+2025/05/11 12:45:55 - mmengine - INFO - Epoch(val) [25][49/49]    coco/bbox_mAP: 0.3730  coco/bbox_mAP_50: 0.6790  coco/bbox_mAP_75: 0.3670  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2280  coco/bbox_mAP_l: 0.3960  data_time: 0.0045  time: 0.0203
+2025/05/11 12:45:55 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_24.pth is removed
+2025/05/11 12:45:57 - mmengine - INFO - The best checkpoint with 0.3730 coco/bbox_mAP at 25 epoch is saved to best_coco_bbox_mAP_epoch_25.pth.
+2025/05/11 12:46:11 - mmengine - INFO - Epoch(train) [26][ 50/141]  lr: 1.0000e-03  eta: 0:03:02  time: 0.2850  data_time: 0.1106  memory: 2033  grad_norm: 2693.2571  loss: 1425.3043  loss_cls: 204.1472  loss_conf: 514.9983  loss_xy: 683.0409  loss_wh: 23.1180
+2025/05/11 12:46:25 - mmengine - INFO - Epoch(train) [26][100/141]  lr: 1.0000e-03  eta: 0:02:48  time: 0.2839  data_time: 0.1143  memory: 2033  grad_norm: 2496.0131  loss: 1405.2702  loss_cls: 191.1661  loss_conf: 510.9545  loss_xy: 677.5191  loss_wh: 25.6306
+2025/05/11 12:46:37 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:46:38 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:46:40 - mmengine - INFO - bbox_mAP_copypaste: 0.288 0.578 0.253 -1.000 0.221 0.306
+2025/05/11 12:46:40 - mmengine - INFO - Epoch(val) [26][49/49]    coco/bbox_mAP: 0.2880  coco/bbox_mAP_50: 0.5780  coco/bbox_mAP_75: 0.2530  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2210  coco/bbox_mAP_l: 0.3060  data_time: 0.0038  time: 0.0197
+2025/05/11 12:46:53 - mmengine - INFO - Epoch(train) [27][ 50/141]  lr: 1.0000e-03  eta: 0:02:22  time: 0.2730  data_time: 0.1010  memory: 2033  grad_norm: 2677.5128  loss: 1407.7117  loss_cls: 200.9917  loss_conf: 506.4221  loss_xy: 676.2929  loss_wh: 24.0049
+2025/05/11 12:47:08 - mmengine - INFO - Epoch(train) [27][100/141]  lr: 1.0000e-03  eta: 0:02:09  time: 0.2935  data_time: 0.1223  memory: 2033  grad_norm: 2542.2670  loss: 1435.2408  loss_cls: 197.6610  loss_conf: 522.1134  loss_xy: 691.2185  loss_wh: 24.2479
+2025/05/11 12:47:19 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:47:20 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:47:22 - mmengine - INFO - bbox_mAP_copypaste: 0.330 0.662 0.279 -1.000 0.249 0.344
+2025/05/11 12:47:22 - mmengine - INFO - Epoch(val) [27][49/49]    coco/bbox_mAP: 0.3300  coco/bbox_mAP_50: 0.6620  coco/bbox_mAP_75: 0.2790  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2490  coco/bbox_mAP_l: 0.3440  data_time: 0.0042  time: 0.0200
+2025/05/11 12:47:36 - mmengine - INFO - Epoch(train) [28][ 50/141]  lr: 1.0000e-03  eta: 0:01:43  time: 0.2805  data_time: 0.1090  memory: 2033  grad_norm: 2779.5716  loss: 1407.1069  loss_cls: 210.1517  loss_conf: 499.3193  loss_xy: 672.3670  loss_wh: 25.2689
+2025/05/11 12:47:50 - mmengine - INFO - Epoch(train) [28][100/141]  lr: 1.0000e-03  eta: 0:01:29  time: 0.2853  data_time: 0.1182  memory: 2033  grad_norm: 2486.0799  loss: 1382.1384  loss_cls: 194.9726  loss_conf: 496.3627  loss_xy: 666.4657  loss_wh: 24.3374
+2025/05/11 12:48:02 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:48:03 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:48:04 - mmengine - INFO - bbox_mAP_copypaste: 0.324 0.689 0.227 -1.000 0.216 0.343
+2025/05/11 12:48:04 - mmengine - INFO - Epoch(val) [28][49/49]    coco/bbox_mAP: 0.3240  coco/bbox_mAP_50: 0.6890  coco/bbox_mAP_75: 0.2270  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2160  coco/bbox_mAP_l: 0.3430  data_time: 0.0031  time: 0.0219
+2025/05/11 12:48:19 - mmengine - INFO - Epoch(train) [29][ 50/141]  lr: 1.0000e-03  eta: 0:01:04  time: 0.2929  data_time: 0.1391  memory: 2033  grad_norm: 2510.4939  loss: 1383.4879  loss_cls: 183.1783  loss_conf: 503.8291  loss_xy: 671.9480  loss_wh: 24.5324
+2025/05/11 12:48:20 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:48:33 - mmengine - INFO - Epoch(train) [29][100/141]  lr: 1.0000e-03  eta: 0:00:50  time: 0.2710  data_time: 0.1234  memory: 2033  grad_norm: 2675.1614  loss: 1399.9302  loss_cls: 209.7686  loss_conf: 491.2056  loss_xy: 676.4665  loss_wh: 22.4896
+2025/05/11 12:48:43 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:48:44 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:48:46 - mmengine - INFO - bbox_mAP_copypaste: 0.355 0.668 0.337 -1.000 0.237 0.377
+2025/05/11 12:48:46 - mmengine - INFO - Epoch(val) [29][49/49]    coco/bbox_mAP: 0.3550  coco/bbox_mAP_50: 0.6680  coco/bbox_mAP_75: 0.3370  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2370  coco/bbox_mAP_l: 0.3770  data_time: 0.0044  time: 0.0200
+2025/05/11 12:49:00 - mmengine - INFO - Epoch(train) [30][ 50/141]  lr: 1.0000e-03  eta: 0:00:25  time: 0.2869  data_time: 0.1341  memory: 2033  grad_norm: 2545.1765  loss: 1403.9113  loss_cls: 191.6084  loss_conf: 497.4489  loss_xy: 691.3860  loss_wh: 23.4679
+2025/05/11 12:49:13 - mmengine - INFO - Epoch(train) [30][100/141]  lr: 1.0000e-03  eta: 0:00:11  time: 0.2676  data_time: 0.1160  memory: 2033  grad_norm: 2575.3550  loss: 1402.5889  loss_cls: 201.0100  loss_conf: 491.6654  loss_xy: 686.7591  loss_wh: 23.1543
+2025/05/11 12:49:25 - mmengine - INFO - Exp name: yolov3_fs_df_bal_20250511_122800
+2025/05/11 12:49:25 - mmengine - INFO - Saving checkpoint at 30 epochs
+2025/05/11 12:49:28 - mmengine - INFO - Evaluating bbox...
+2025/05/11 12:49:30 - mmengine - INFO - bbox_mAP_copypaste: 0.387 0.730 0.356 -1.000 0.246 0.407
+2025/05/11 12:49:30 - mmengine - INFO - Epoch(val) [30][49/49]    coco/bbox_mAP: 0.3870  coco/bbox_mAP_50: 0.7300  coco/bbox_mAP_75: 0.3560  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2460  coco/bbox_mAP_l: 0.4070  data_time: 0.0022  time: 0.0213
+2025/05/11 12:49:30 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\yolov3\best_coco_bbox_mAP_epoch_25.pth is removed
+2025/05/11 12:49:31 - mmengine - INFO - The best checkpoint with 0.3870 coco/bbox_mAP at 30 epoch is saved to best_coco_bbox_mAP_epoch_30.pth.

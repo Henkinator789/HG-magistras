@@ -1,0 +1,2116 @@
+2025/05/13 14:02:41 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: win32
+    Python: 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 1487711210
+    GPU 0: NVIDIA GeForce RTX 3070 Ti
+    CUDA_HOME: C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6
+    NVCC: Cuda compilation tools, release 12.6, V12.6.85
+    MSVC: Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34433 for x64
+    GCC: n/a
+    PyTorch: 2.1.0+cu118
+    PyTorch compiling details: PyTorch built with:
+  - C++ Version: 199711
+  - MSVC 192930151
+  - Intel(R) Math Kernel Library Version 2020.0.2 Product Build 20200624 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 2019
+  - LAPACK is enabled (usually provided by MKL)
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.7
+  - Magma 2.5.4
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/builder/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /bigobj /FS -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /utf-8 /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=OFF, TORCH_VERSION=2.1.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.0+cu118
+    OpenCV: 4.10.0
+    MMEngine: 0.10.5
+
+Runtime environment:
+    cudnn_benchmark: False
+    dist_cfg: {'backend': 'nccl'}
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    seed: 1487711210
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2025/05/13 14:02:42 - mmengine - INFO - Config:
+auto_scale_lr = dict(base_batch_size=16, enable=False)
+backend_args = None
+base_lr = 0.004
+custom_hooks = [
+    dict(
+        ema_type='ExpMomentumEMA',
+        momentum=0.0002,
+        priority=49,
+        type='EMAHook',
+        update_buffers=True),
+    dict(
+        switch_epoch=280,
+        switch_pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(keep_ratio=True, scale=(
+                640,
+                640,
+            ), type='Resize'),
+            dict(type='PhotoMetricDistortion'),
+            dict(type='RandomAffine'),
+            dict(type='PackDetInputs'),
+        ],
+        type='PipelineSwitchHook'),
+]
+data_root = 'D:/Repositories/test/data/larch_casebearer/'
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    checkpoint=dict(
+        interval=0,
+        max_keep_ckpts=3,
+        save_best='coco/bbox_mAP',
+        type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='DetVisualizationHook'))
+default_scope = 'mmdet'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_scales = [
+    (
+        640,
+        640,
+    ),
+    (
+        320,
+        320,
+    ),
+    (
+        960,
+        960,
+    ),
+]
+interval = 10
+launcher = 'none'
+load_from = 'D:/Repositories/test/25-05-09/rtmdet/weigths/rtmdet_m_8xb32-300e_coco_20220719_112220-229f527c.pth'
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+max_epochs = 300
+metainfo = dict(
+    classes=(
+        'H',
+        'LD',
+        'HD',
+        'other',
+    ),
+    palette=[
+        (
+            0,
+            255,
+            0,
+        ),
+        (
+            255,
+            128,
+            0,
+        ),
+        (
+            255,
+            0,
+            0,
+        ),
+        (
+            0,
+            0,
+            255,
+        ),
+    ])
+model = dict(
+    backbone=dict(
+        act_cfg=dict(inplace=True, type='SiLU'),
+        arch='P5',
+        channel_attention=True,
+        deepen_factor=0.67,
+        expand_ratio=0.5,
+        norm_cfg=dict(type='SyncBN'),
+        type='CSPNeXt',
+        widen_factor=0.75),
+    bbox_head=dict(
+        act_cfg=dict(inplace=True, type='SiLU'),
+        anchor_generator=dict(
+            offset=0, strides=[
+                8,
+                16,
+                32,
+            ], type='MlvlPointGenerator'),
+        bbox_coder=dict(type='DistancePointBBoxCoder'),
+        exp_on_reg=True,
+        feat_channels=192,
+        in_channels=192,
+        loss_bbox=dict(loss_weight=2.0, type='GIoULoss'),
+        loss_cls=dict(
+            beta=2.0,
+            loss_weight=1.0,
+            type='QualityFocalLoss',
+            use_sigmoid=True),
+        norm_cfg=dict(type='SyncBN'),
+        num_classes=4,
+        pred_kernel_size=1,
+        share_conv=True,
+        stacked_convs=2,
+        type='RTMDetSepBNHead',
+        with_objectness=False),
+    data_preprocessor=dict(
+        batch_augments=None,
+        bgr_to_rgb=False,
+        mean=[
+            103.53,
+            116.28,
+            123.675,
+        ],
+        std=[
+            57.375,
+            57.12,
+            58.395,
+        ],
+        type='DetDataPreprocessor'),
+    neck=dict(
+        act_cfg=dict(inplace=True, type='SiLU'),
+        expand_ratio=0.5,
+        in_channels=[
+            192,
+            384,
+            768,
+        ],
+        norm_cfg=dict(type='SyncBN'),
+        num_csp_blocks=2,
+        out_channels=192,
+        type='CSPNeXtPAFPN'),
+    test_cfg=dict(
+        max_per_img=300,
+        min_bbox_size=0,
+        nms=dict(iou_threshold=0.65, type='nms'),
+        nms_pre=30000,
+        score_thr=0.001),
+    train_cfg=dict(
+        allowed_border=-1,
+        assigner=dict(topk=13, type='DynamicSoftLabelAssigner'),
+        debug=False,
+        pos_weight=-1),
+    type='RTMDet')
+optim_wrapper = dict(
+    optimizer=dict(lr=0.004, type='AdamW', weight_decay=0.05),
+    paramwise_cfg=dict(
+        bias_decay_mult=0, bypass_duplicate=True, norm_decay_mult=0),
+    type='OptimWrapper')
+param_scheduler = [
+    dict(
+        begin=0, by_epoch=False, end=1000, start_factor=1e-05,
+        type='LinearLR'),
+    dict(
+        T_max=150,
+        begin=150,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=300,
+        eta_min=0.0002,
+        type='CosineAnnealingLR'),
+]
+resume = False
+stage2_num_epochs = 20
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=5,
+    dataset=dict(
+        ann_file='test/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='test/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                640,
+                640,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=10,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='D:/Repositories/test/data/larch_casebearer/test/annotations.json',
+    backend_args=None,
+    classwise=True,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+test_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        640,
+        640,
+    ), type='Resize'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+        ),
+        type='PackDetInputs'),
+]
+train_cfg = dict(
+    dynamic_intervals=[
+        (
+            280,
+            1,
+        ),
+    ],
+    max_epochs=30,
+    type='EpochBasedTrainLoop',
+    val_interval=1)
+train_dataloader = dict(
+    batch_sampler=None,
+    batch_size=4,
+    dataset=dict(
+        ann_file='train/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='train/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        filter_cfg=dict(filter_empty_gt=True, min_size=32),
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(keep_ratio=True, scale=(
+                640,
+                640,
+            ), type='Resize'),
+            dict(type='PhotoMetricDistortion'),
+            dict(type='RandomAffine'),
+            dict(type='PackDetInputs'),
+        ],
+        type='CocoDataset'),
+    num_workers=1,
+    persistent_workers=True,
+    pin_memory=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(keep_ratio=True, scale=(
+        640,
+        640,
+    ), type='Resize'),
+    dict(type='PhotoMetricDistortion'),
+    dict(type='RandomAffine'),
+    dict(type='PackDetInputs'),
+]
+train_pipeline_stage2 = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(keep_ratio=True, scale=(
+        640,
+        640,
+    ), type='Resize'),
+    dict(type='PhotoMetricDistortion'),
+    dict(type='RandomAffine'),
+    dict(type='PackDetInputs'),
+]
+tta_model = dict(
+    tta_cfg=dict(max_per_img=100, nms=dict(iou_threshold=0.6, type='nms')),
+    type='DetTTAModel')
+tta_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(
+        transforms=[
+            [
+                dict(keep_ratio=True, scale=(
+                    640,
+                    640,
+                ), type='Resize'),
+                dict(keep_ratio=True, scale=(
+                    320,
+                    320,
+                ), type='Resize'),
+                dict(keep_ratio=True, scale=(
+                    960,
+                    960,
+                ), type='Resize'),
+            ],
+            [
+                dict(prob=1.0, type='RandomFlip'),
+                dict(prob=0.0, type='RandomFlip'),
+            ],
+            [
+                dict(
+                    pad_val=dict(img=(
+                        114,
+                        114,
+                        114,
+                    )),
+                    size=(
+                        960,
+                        960,
+                    ),
+                    type='Pad'),
+            ],
+            [
+                dict(type='LoadAnnotations', with_bbox=True),
+            ],
+            [
+                dict(
+                    meta_keys=(
+                        'img_id',
+                        'img_path',
+                        'ori_shape',
+                        'img_shape',
+                        'scale_factor',
+                        'flip',
+                        'flip_direction',
+                    ),
+                    type='PackDetInputs'),
+            ],
+        ],
+        type='TestTimeAug'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=5,
+    dataset=dict(
+        ann_file='val/annotations.json',
+        backend_args=None,
+        data_prefix=dict(img='val/'),
+        data_root='D:/Repositories/test/data/larch_casebearer/',
+        metainfo=dict(
+            classes=(
+                'H',
+                'LD',
+                'HD',
+                'other',
+            ),
+            palette=[
+                (
+                    0,
+                    255,
+                    0,
+                ),
+                (
+                    255,
+                    128,
+                    0,
+                ),
+                (
+                    255,
+                    0,
+                    0,
+                ),
+                (
+                    0,
+                    0,
+                    255,
+                ),
+            ]),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                640,
+                640,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=10,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='D:/Repositories/test/data/larch_casebearer/val/annotations.json',
+    backend_args=None,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = '25-05-09/rtmdet'
+
+2025/05/13 14:02:43 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2025/05/13 14:02:43 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_load_checkpoint:
+(49          ) EMAHook                            
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+(NORMAL      ) PipelineSwitchHook                 
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_save_checkpoint:
+(49          ) EMAHook                            
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stem.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stem.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stem.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stem.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stem.2.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stem.2.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.main_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.main_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.short_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.short_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.final_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.final_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.0.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.0.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.0.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.0.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.0.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.0.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.1.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.1.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.1.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.1.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.1.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.blocks.1.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage1.1.attention.fc.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.main_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.main_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.short_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.short_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.final_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.final_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.0.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.0.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.0.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.0.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.0.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.0.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.1.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.1.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.1.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.1.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.1.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.1.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.2.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.2.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.2.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.2.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.2.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.2.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.3.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.3.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.3.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.3.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.3.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.blocks.3.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage2.1.attention.fc.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.main_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.main_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.short_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.short_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.final_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.final_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.0.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.0.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.0.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.0.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.0.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.0.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.1.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.1.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.1.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.1.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.1.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.1.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.2.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.2.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.2.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.2.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.2.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.2.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.3.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.3.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.3.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.3.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.3.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.blocks.3.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage3.1.attention.fc.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.1.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.1.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.1.conv2.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.1.conv2.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.main_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.main_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.short_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.short_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.final_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.final_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.0.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.0.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.0.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.0.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.0.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.0.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.1.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.1.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.1.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.1.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.1.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.blocks.1.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- backbone.stage4.2.attention.fc.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.reduce_layers.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.reduce_layers.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.reduce_layers.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.reduce_layers.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.main_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.main_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.short_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.short_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.final_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.final_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.0.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.0.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.0.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.0.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.0.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.0.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.1.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.1.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.1.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.1.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.1.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.0.blocks.1.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.main_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.main_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.short_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.short_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.final_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.final_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.0.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.0.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.0.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.0.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.0.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.0.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.1.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.1.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.1.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.1.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.1.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.top_down_blocks.1.blocks.1.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.downsamples.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.downsamples.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.downsamples.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.downsamples.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.main_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.main_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.short_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.short_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.final_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.final_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.0.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.0.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.0.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.0.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.0.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.0.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.1.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.1.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.1.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.1.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.1.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.0.blocks.1.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.main_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.main_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.short_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.short_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.final_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.final_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.0.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.0.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.0.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.0.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.0.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.0.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.1.conv1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.1.conv1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.1.conv2.depthwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.1.conv2.depthwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.1.conv2.pointwise_conv.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.bottom_up_blocks.1.blocks.1.conv2.pointwise_conv.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.out_convs.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.out_convs.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.out_convs.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.out_convs.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.out_convs.2.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- neck.out_convs.2.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.0.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.0.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.0.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.0.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - WARNING - bbox_head.cls_convs.1.0.conv is duplicate. It is skipped since bypass_duplicate=True
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.1.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.1.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - WARNING - bbox_head.cls_convs.1.1.conv is duplicate. It is skipped since bypass_duplicate=True
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.1.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.1.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - WARNING - bbox_head.cls_convs.2.0.conv is duplicate. It is skipped since bypass_duplicate=True
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.2.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.2.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - WARNING - bbox_head.cls_convs.2.1.conv is duplicate. It is skipped since bypass_duplicate=True
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.2.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.cls_convs.2.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.0.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.0.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.0.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.0.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - WARNING - bbox_head.reg_convs.1.0.conv is duplicate. It is skipped since bypass_duplicate=True
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.1.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.1.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - WARNING - bbox_head.reg_convs.1.1.conv is duplicate. It is skipped since bypass_duplicate=True
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.1.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.1.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - WARNING - bbox_head.reg_convs.2.0.conv is duplicate. It is skipped since bypass_duplicate=True
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.2.0.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.2.0.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - WARNING - bbox_head.reg_convs.2.1.conv is duplicate. It is skipped since bypass_duplicate=True
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.2.1.bn.weight:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.reg_convs.2.1.bn.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.rtm_cls.0.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.rtm_cls.1.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.rtm_cls.2.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.rtm_reg.0.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.rtm_reg.1.bias:weight_decay=0.0
+2025/05/13 14:02:43 - mmengine - INFO - paramwise_options -- bbox_head.rtm_reg.2.bias:weight_decay=0.0
+Name of parameter - Initialization information
+
+backbone.stem.0.conv.weight - torch.Size([24, 3, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stem.0.bn.weight - torch.Size([24]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stem.0.bn.bias - torch.Size([24]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stem.1.conv.weight - torch.Size([24, 24, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stem.1.bn.weight - torch.Size([24]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stem.1.bn.bias - torch.Size([24]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stem.2.conv.weight - torch.Size([48, 24, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stem.2.bn.weight - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stem.2.bn.bias - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.0.conv.weight - torch.Size([96, 48, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.0.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.0.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.main_conv.conv.weight - torch.Size([48, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.main_conv.bn.weight - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.main_conv.bn.bias - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.short_conv.conv.weight - torch.Size([48, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.short_conv.bn.weight - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.short_conv.bn.bias - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.final_conv.conv.weight - torch.Size([96, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.final_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.final_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.0.conv1.conv.weight - torch.Size([48, 48, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.blocks.0.conv1.bn.weight - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.0.conv1.bn.bias - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.0.conv2.depthwise_conv.conv.weight - torch.Size([48, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.blocks.0.conv2.depthwise_conv.bn.weight - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.0.conv2.depthwise_conv.bn.bias - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.0.conv2.pointwise_conv.conv.weight - torch.Size([48, 48, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.blocks.0.conv2.pointwise_conv.bn.weight - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.0.conv2.pointwise_conv.bn.bias - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.1.conv1.conv.weight - torch.Size([48, 48, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.blocks.1.conv1.bn.weight - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.1.conv1.bn.bias - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.1.conv2.depthwise_conv.conv.weight - torch.Size([48, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.blocks.1.conv2.depthwise_conv.bn.weight - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.1.conv2.depthwise_conv.bn.bias - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.1.conv2.pointwise_conv.conv.weight - torch.Size([48, 48, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.blocks.1.conv2.pointwise_conv.bn.weight - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.blocks.1.conv2.pointwise_conv.bn.bias - torch.Size([48]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage1.1.attention.fc.weight - torch.Size([96, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage1.1.attention.fc.bias - torch.Size([96]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.0.conv.weight - torch.Size([192, 96, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.0.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.0.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.main_conv.conv.weight - torch.Size([96, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.main_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.main_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.short_conv.conv.weight - torch.Size([96, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.short_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.short_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.final_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.final_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.final_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.0.conv1.conv.weight - torch.Size([96, 96, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.0.conv1.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.0.conv1.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.0.conv2.depthwise_conv.conv.weight - torch.Size([96, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.0.conv2.depthwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.0.conv2.depthwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.0.conv2.pointwise_conv.conv.weight - torch.Size([96, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.0.conv2.pointwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.0.conv2.pointwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.1.conv1.conv.weight - torch.Size([96, 96, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.1.conv1.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.1.conv1.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.1.conv2.depthwise_conv.conv.weight - torch.Size([96, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.1.conv2.depthwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.1.conv2.depthwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.1.conv2.pointwise_conv.conv.weight - torch.Size([96, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.1.conv2.pointwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.1.conv2.pointwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.2.conv1.conv.weight - torch.Size([96, 96, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.2.conv1.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.2.conv1.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.2.conv2.depthwise_conv.conv.weight - torch.Size([96, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.2.conv2.depthwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.2.conv2.depthwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.2.conv2.pointwise_conv.conv.weight - torch.Size([96, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.2.conv2.pointwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.2.conv2.pointwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.3.conv1.conv.weight - torch.Size([96, 96, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.3.conv1.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.3.conv1.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.3.conv2.depthwise_conv.conv.weight - torch.Size([96, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.3.conv2.depthwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.3.conv2.depthwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.3.conv2.pointwise_conv.conv.weight - torch.Size([96, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.blocks.3.conv2.pointwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.blocks.3.conv2.pointwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage2.1.attention.fc.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage2.1.attention.fc.bias - torch.Size([192]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.0.conv.weight - torch.Size([384, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.0.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.0.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.main_conv.conv.weight - torch.Size([192, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.main_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.main_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.short_conv.conv.weight - torch.Size([192, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.short_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.short_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.final_conv.conv.weight - torch.Size([384, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.final_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.final_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.0.conv1.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.0.conv1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.0.conv1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.0.conv2.depthwise_conv.conv.weight - torch.Size([192, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.0.conv2.depthwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.0.conv2.depthwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.0.conv2.pointwise_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.0.conv2.pointwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.0.conv2.pointwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.1.conv1.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.1.conv1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.1.conv1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.1.conv2.depthwise_conv.conv.weight - torch.Size([192, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.1.conv2.depthwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.1.conv2.depthwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.1.conv2.pointwise_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.1.conv2.pointwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.1.conv2.pointwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.2.conv1.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.2.conv1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.2.conv1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.2.conv2.depthwise_conv.conv.weight - torch.Size([192, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.2.conv2.depthwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.2.conv2.depthwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.2.conv2.pointwise_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.2.conv2.pointwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.2.conv2.pointwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.3.conv1.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.3.conv1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.3.conv1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.3.conv2.depthwise_conv.conv.weight - torch.Size([192, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.3.conv2.depthwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.3.conv2.depthwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.3.conv2.pointwise_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.blocks.3.conv2.pointwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.blocks.3.conv2.pointwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage3.1.attention.fc.weight - torch.Size([384, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage3.1.attention.fc.bias - torch.Size([384]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.0.conv.weight - torch.Size([768, 384, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.0.bn.weight - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.0.bn.bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.1.conv1.conv.weight - torch.Size([384, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.1.conv1.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.1.conv1.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.1.conv2.conv.weight - torch.Size([768, 1536, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.1.conv2.bn.weight - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.1.conv2.bn.bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.main_conv.conv.weight - torch.Size([384, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.main_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.main_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.short_conv.conv.weight - torch.Size([384, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.short_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.short_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.final_conv.conv.weight - torch.Size([768, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.final_conv.bn.weight - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.final_conv.bn.bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.0.conv1.conv.weight - torch.Size([384, 384, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.blocks.0.conv1.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.0.conv1.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.0.conv2.depthwise_conv.conv.weight - torch.Size([384, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.blocks.0.conv2.depthwise_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.0.conv2.depthwise_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.0.conv2.pointwise_conv.conv.weight - torch.Size([384, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.blocks.0.conv2.pointwise_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.0.conv2.pointwise_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.1.conv1.conv.weight - torch.Size([384, 384, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.blocks.1.conv1.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.1.conv1.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.1.conv2.depthwise_conv.conv.weight - torch.Size([384, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.blocks.1.conv2.depthwise_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.1.conv2.depthwise_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.1.conv2.pointwise_conv.conv.weight - torch.Size([384, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.blocks.1.conv2.pointwise_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.blocks.1.conv2.pointwise_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+backbone.stage4.2.attention.fc.weight - torch.Size([768, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+backbone.stage4.2.attention.fc.bias - torch.Size([768]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.reduce_layers.0.conv.weight - torch.Size([384, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.reduce_layers.0.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.reduce_layers.0.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.reduce_layers.1.conv.weight - torch.Size([192, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.reduce_layers.1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.reduce_layers.1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.main_conv.conv.weight - torch.Size([192, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.0.main_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.main_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.short_conv.conv.weight - torch.Size([192, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.0.short_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.short_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.final_conv.conv.weight - torch.Size([384, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.0.final_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.final_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.0.conv1.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.0.blocks.0.conv1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.0.conv1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.0.conv2.depthwise_conv.conv.weight - torch.Size([192, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.0.blocks.0.conv2.depthwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.0.conv2.depthwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.0.conv2.pointwise_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.0.blocks.0.conv2.pointwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.0.conv2.pointwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.1.conv1.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.0.blocks.1.conv1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.1.conv1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.1.conv2.depthwise_conv.conv.weight - torch.Size([192, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.0.blocks.1.conv2.depthwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.1.conv2.depthwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.1.conv2.pointwise_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.0.blocks.1.conv2.pointwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.0.blocks.1.conv2.pointwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.main_conv.conv.weight - torch.Size([96, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.1.main_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.main_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.short_conv.conv.weight - torch.Size([96, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.1.short_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.short_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.final_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.1.final_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.final_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.0.conv1.conv.weight - torch.Size([96, 96, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.1.blocks.0.conv1.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.0.conv1.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.0.conv2.depthwise_conv.conv.weight - torch.Size([96, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.1.blocks.0.conv2.depthwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.0.conv2.depthwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.0.conv2.pointwise_conv.conv.weight - torch.Size([96, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.1.blocks.0.conv2.pointwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.0.conv2.pointwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.1.conv1.conv.weight - torch.Size([96, 96, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.1.blocks.1.conv1.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.1.conv1.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.1.conv2.depthwise_conv.conv.weight - torch.Size([96, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.1.blocks.1.conv2.depthwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.1.conv2.depthwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.1.conv2.pointwise_conv.conv.weight - torch.Size([96, 96, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.top_down_blocks.1.blocks.1.conv2.pointwise_conv.bn.weight - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.top_down_blocks.1.blocks.1.conv2.pointwise_conv.bn.bias - torch.Size([96]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.downsamples.0.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.downsamples.0.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.downsamples.0.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.downsamples.1.conv.weight - torch.Size([384, 384, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.downsamples.1.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.downsamples.1.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.main_conv.conv.weight - torch.Size([192, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.0.main_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.main_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.short_conv.conv.weight - torch.Size([192, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.0.short_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.short_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.final_conv.conv.weight - torch.Size([384, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.0.final_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.final_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.0.conv1.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.0.blocks.0.conv1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.0.conv1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.0.conv2.depthwise_conv.conv.weight - torch.Size([192, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.0.blocks.0.conv2.depthwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.0.conv2.depthwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.0.conv2.pointwise_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.0.blocks.0.conv2.pointwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.0.conv2.pointwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.1.conv1.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.0.blocks.1.conv1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.1.conv1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.1.conv2.depthwise_conv.conv.weight - torch.Size([192, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.0.blocks.1.conv2.depthwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.1.conv2.depthwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.1.conv2.pointwise_conv.conv.weight - torch.Size([192, 192, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.0.blocks.1.conv2.pointwise_conv.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.0.blocks.1.conv2.pointwise_conv.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.main_conv.conv.weight - torch.Size([384, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.1.main_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.main_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.short_conv.conv.weight - torch.Size([384, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.1.short_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.short_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.final_conv.conv.weight - torch.Size([768, 768, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.1.final_conv.bn.weight - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.final_conv.bn.bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.0.conv1.conv.weight - torch.Size([384, 384, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.1.blocks.0.conv1.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.0.conv1.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.0.conv2.depthwise_conv.conv.weight - torch.Size([384, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.1.blocks.0.conv2.depthwise_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.0.conv2.depthwise_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.0.conv2.pointwise_conv.conv.weight - torch.Size([384, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.1.blocks.0.conv2.pointwise_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.0.conv2.pointwise_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.1.conv1.conv.weight - torch.Size([384, 384, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.1.blocks.1.conv1.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.1.conv1.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.1.conv2.depthwise_conv.conv.weight - torch.Size([384, 1, 5, 5]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.1.blocks.1.conv2.depthwise_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.1.conv2.depthwise_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.1.conv2.pointwise_conv.conv.weight - torch.Size([384, 384, 1, 1]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.bottom_up_blocks.1.blocks.1.conv2.pointwise_conv.bn.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.bottom_up_blocks.1.blocks.1.conv2.pointwise_conv.bn.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.out_convs.0.conv.weight - torch.Size([192, 192, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.out_convs.0.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.out_convs.0.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.out_convs.1.conv.weight - torch.Size([192, 384, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.out_convs.1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.out_convs.1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.out_convs.2.conv.weight - torch.Size([192, 768, 3, 3]): 
+KaimingInit: a=2.23606797749979, mode=fan_in, nonlinearity=leaky_relu, distribution =uniform, bias=0 
+
+neck.out_convs.2.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+neck.out_convs.2.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.0.0.conv.weight - torch.Size([192, 192, 3, 3]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.cls_convs.0.0.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.0.0.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.0.1.conv.weight - torch.Size([192, 192, 3, 3]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.cls_convs.0.1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.0.1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.1.0.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.1.0.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.1.1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.1.1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.2.0.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.2.0.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.2.1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.cls_convs.2.1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.0.0.conv.weight - torch.Size([192, 192, 3, 3]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.reg_convs.0.0.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.0.0.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.0.1.conv.weight - torch.Size([192, 192, 3, 3]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.reg_convs.0.1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.0.1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.1.0.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.1.0.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.1.1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.1.1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.2.0.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.2.0.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.2.1.bn.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.reg_convs.2.1.bn.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of RTMDet  
+
+bbox_head.rtm_cls.0.weight - torch.Size([4, 192, 1, 1]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_cls.0.bias - torch.Size([4]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_cls.1.weight - torch.Size([4, 192, 1, 1]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_cls.1.bias - torch.Size([4]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_cls.2.weight - torch.Size([4, 192, 1, 1]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_cls.2.bias - torch.Size([4]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_reg.0.weight - torch.Size([4, 192, 1, 1]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_reg.0.bias - torch.Size([4]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_reg.1.weight - torch.Size([4, 192, 1, 1]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_reg.1.bias - torch.Size([4]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_reg.2.weight - torch.Size([4, 192, 1, 1]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+
+bbox_head.rtm_reg.2.bias - torch.Size([4]): 
+Initialized by user-defined `init_weights` in RTMDetSepBNHead  
+2025/05/13 14:02:44 - mmengine - INFO - Load checkpoint from D:/Repositories/test/25-05-09/rtmdet/weigths/rtmdet_m_8xb32-300e_coco_20220719_112220-229f527c.pth
+2025/05/13 14:02:44 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2025/05/13 14:02:44 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2025/05/13 14:02:44 - mmengine - INFO - Checkpoints will be saved to D:\Repositories\test\25-05-09\rtmdet.
+2025/05/13 14:03:06 - mmengine - INFO - Epoch(train)  [1][ 50/141]  base_lr: 1.9623e-04 lr: 1.9623e-04  eta: 0:30:19  time: 0.4352  data_time: 0.0898  memory: 3782  loss: 2.4206  loss_cls: 1.6073  loss_bbox: 0.8133
+2025/05/13 14:03:23 - mmengine - INFO - Epoch(train)  [1][100/141]  base_lr: 3.9643e-04 lr: 3.9643e-04  eta: 0:26:37  time: 0.3385  data_time: 0.0017  memory: 3787  loss: 1.5936  loss_cls: 1.0591  loss_bbox: 0.5345
+2025/05/13 14:03:37 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:04:18 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:04:21 - mmengine - INFO - bbox_mAP_copypaste: 0.188 0.375 0.163 -1.000 0.111 0.204
+2025/05/13 14:04:21 - mmengine - INFO - Epoch(val) [1][10/10]    coco/bbox_mAP: 0.1880  coco/bbox_mAP_50: 0.3750  coco/bbox_mAP_75: 0.1630  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1110  coco/bbox_mAP_l: 0.2040  data_time: 4.0202  time: 4.1447
+2025/05/13 14:04:22 - mmengine - INFO - The best checkpoint with 0.1880 coco/bbox_mAP at 1 epoch is saved to best_coco_bbox_mAP_epoch_1.pth.
+2025/05/13 14:04:39 - mmengine - INFO - Epoch(train)  [2][ 50/141]  base_lr: 7.6079e-04 lr: 7.6079e-04  eta: 0:24:22  time: 0.3405  data_time: 0.0051  memory: 3777  loss: 0.9590  loss_cls: 0.5545  loss_bbox: 0.4045
+2025/05/13 14:04:56 - mmengine - INFO - Epoch(train)  [2][100/141]  base_lr: 9.6099e-04 lr: 9.6099e-04  eta: 0:23:44  time: 0.3383  data_time: 0.0019  memory: 3766  loss: 0.8875  loss_cls: 0.4900  loss_bbox: 0.3975
+2025/05/13 14:05:09 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:05:11 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:05:14 - mmengine - INFO - bbox_mAP_copypaste: 0.334 0.586 0.363 -1.000 0.197 0.366
+2025/05/13 14:05:14 - mmengine - INFO - Epoch(val) [2][10/10]    coco/bbox_mAP: 0.3340  coco/bbox_mAP_50: 0.5860  coco/bbox_mAP_75: 0.3630  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1970  coco/bbox_mAP_l: 0.3660  data_time: 0.0220  time: 0.1191
+2025/05/13 14:05:14 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\rtmdet\best_coco_bbox_mAP_epoch_1.pth is removed
+2025/05/13 14:05:15 - mmengine - INFO - The best checkpoint with 0.3340 coco/bbox_mAP at 2 epoch is saved to best_coco_bbox_mAP_epoch_2.pth.
+2025/05/13 14:05:32 - mmengine - INFO - Epoch(train)  [3][ 50/141]  base_lr: 1.3254e-03 lr: 1.3254e-03  eta: 0:22:49  time: 0.3440  data_time: 0.0051  memory: 3770  loss: 0.8746  loss_cls: 0.4781  loss_bbox: 0.3965
+2025/05/13 14:05:49 - mmengine - INFO - Epoch(train)  [3][100/141]  base_lr: 1.5256e-03 lr: 1.5256e-03  eta: 0:22:21  time: 0.3319  data_time: 0.0017  memory: 3762  loss: 0.8525  loss_cls: 0.4657  loss_bbox: 0.3868
+2025/05/13 14:06:03 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:06:04 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:06:07 - mmengine - INFO - bbox_mAP_copypaste: 0.320 0.561 0.344 -1.000 0.205 0.348
+2025/05/13 14:06:07 - mmengine - INFO - Epoch(val) [3][10/10]    coco/bbox_mAP: 0.3200  coco/bbox_mAP_50: 0.5610  coco/bbox_mAP_75: 0.3440  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2050  coco/bbox_mAP_l: 0.3480  data_time: 0.0209  time: 0.1190
+2025/05/13 14:06:23 - mmengine - INFO - Epoch(train)  [4][ 50/141]  base_lr: 1.8899e-03 lr: 1.8899e-03  eta: 0:21:37  time: 0.3284  data_time: 0.0050  memory: 3784  loss: 0.8202  loss_cls: 0.4314  loss_bbox: 0.3888
+2025/05/13 14:06:40 - mmengine - INFO - Epoch(train)  [4][100/141]  base_lr: 2.0901e-03 lr: 2.0901e-03  eta: 0:21:18  time: 0.3386  data_time: 0.0017  memory: 3782  loss: 0.8000  loss_cls: 0.4192  loss_bbox: 0.3808
+2025/05/13 14:06:54 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:06:55 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:06:58 - mmengine - INFO - bbox_mAP_copypaste: 0.362 0.618 0.403 -1.000 0.207 0.397
+2025/05/13 14:06:58 - mmengine - INFO - Epoch(val) [4][10/10]    coco/bbox_mAP: 0.3620  coco/bbox_mAP_50: 0.6180  coco/bbox_mAP_75: 0.4030  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2070  coco/bbox_mAP_l: 0.3970  data_time: 0.0206  time: 0.1171
+2025/05/13 14:06:58 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\rtmdet\best_coco_bbox_mAP_epoch_2.pth is removed
+2025/05/13 14:06:59 - mmengine - INFO - The best checkpoint with 0.3620 coco/bbox_mAP at 4 epoch is saved to best_coco_bbox_mAP_epoch_4.pth.
+2025/05/13 14:07:17 - mmengine - INFO - Epoch(train)  [5][ 50/141]  base_lr: 2.4545e-03 lr: 2.4545e-03  eta: 0:20:42  time: 0.3418  data_time: 0.0053  memory: 3785  loss: 0.8022  loss_cls: 0.4087  loss_bbox: 0.3935
+2025/05/13 14:07:33 - mmengine - INFO - Epoch(train)  [5][100/141]  base_lr: 2.6547e-03 lr: 2.6547e-03  eta: 0:20:21  time: 0.3268  data_time: 0.0018  memory: 3769  loss: 0.7690  loss_cls: 0.3918  loss_bbox: 0.3771
+2025/05/13 14:07:47 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:07:48 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:07:51 - mmengine - INFO - bbox_mAP_copypaste: 0.357 0.710 0.311 -1.000 0.237 0.376
+2025/05/13 14:07:51 - mmengine - INFO - Epoch(val) [5][10/10]    coco/bbox_mAP: 0.3570  coco/bbox_mAP_50: 0.7100  coco/bbox_mAP_75: 0.3110  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2370  coco/bbox_mAP_l: 0.3760  data_time: 0.0221  time: 0.1191
+2025/05/13 14:08:08 - mmengine - INFO - Epoch(train)  [6][ 50/141]  base_lr: 3.0190e-03 lr: 3.0190e-03  eta: 0:19:48  time: 0.3393  data_time: 0.0052  memory: 3789  loss: 0.7848  loss_cls: 0.4004  loss_bbox: 0.3844
+2025/05/13 14:08:25 - mmengine - INFO - Epoch(train)  [6][100/141]  base_lr: 3.2192e-03 lr: 3.2192e-03  eta: 0:19:29  time: 0.3339  data_time: 0.0019  memory: 3775  loss: 0.8167  loss_cls: 0.4315  loss_bbox: 0.3852
+2025/05/13 14:08:39 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:08:40 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:08:43 - mmengine - INFO - bbox_mAP_copypaste: 0.331 0.598 0.343 -1.000 0.221 0.355
+2025/05/13 14:08:43 - mmengine - INFO - Epoch(val) [6][10/10]    coco/bbox_mAP: 0.3310  coco/bbox_mAP_50: 0.5980  coco/bbox_mAP_75: 0.3430  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2210  coco/bbox_mAP_l: 0.3550  data_time: 0.0208  time: 0.1169
+2025/05/13 14:09:00 - mmengine - INFO - Epoch(train)  [7][ 50/141]  base_lr: 3.5836e-03 lr: 3.5836e-03  eta: 0:18:58  time: 0.3442  data_time: 0.0050  memory: 3795  loss: 0.8306  loss_cls: 0.4333  loss_bbox: 0.3973
+2025/05/13 14:09:17 - mmengine - INFO - Epoch(train)  [7][100/141]  base_lr: 3.7838e-03 lr: 3.7838e-03  eta: 0:18:39  time: 0.3322  data_time: 0.0018  memory: 3785  loss: 0.8179  loss_cls: 0.4233  loss_bbox: 0.3946
+2025/05/13 14:09:30 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:09:31 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:09:34 - mmengine - INFO - bbox_mAP_copypaste: 0.347 0.634 0.344 -1.000 0.258 0.369
+2025/05/13 14:09:34 - mmengine - INFO - Epoch(val) [7][10/10]    coco/bbox_mAP: 0.3470  coco/bbox_mAP_50: 0.6340  coco/bbox_mAP_75: 0.3440  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2580  coco/bbox_mAP_l: 0.3690  data_time: 0.0215  time: 0.1192
+2025/05/13 14:09:39 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:09:51 - mmengine - INFO - Epoch(train)  [8][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:18:07  time: 0.3476  data_time: 0.0046  memory: 3790  loss: 0.8198  loss_cls: 0.4300  loss_bbox: 0.3897
+2025/05/13 14:10:08 - mmengine - INFO - Epoch(train)  [8][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:17:48  time: 0.3280  data_time: 0.0012  memory: 3797  loss: 0.7790  loss_cls: 0.3870  loss_bbox: 0.3919
+2025/05/13 14:10:21 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:10:23 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:10:26 - mmengine - INFO - bbox_mAP_copypaste: 0.446 0.743 0.514 -1.000 0.250 0.475
+2025/05/13 14:10:26 - mmengine - INFO - Epoch(val) [8][10/10]    coco/bbox_mAP: 0.4460  coco/bbox_mAP_50: 0.7430  coco/bbox_mAP_75: 0.5140  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2500  coco/bbox_mAP_l: 0.4750  data_time: 0.0215  time: 0.1203
+2025/05/13 14:10:26 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\rtmdet\best_coco_bbox_mAP_epoch_4.pth is removed
+2025/05/13 14:10:27 - mmengine - INFO - The best checkpoint with 0.4460 coco/bbox_mAP at 8 epoch is saved to best_coco_bbox_mAP_epoch_8.pth.
+2025/05/13 14:10:44 - mmengine - INFO - Epoch(train)  [9][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:17:17  time: 0.3407  data_time: 0.0047  memory: 3775  loss: 0.7481  loss_cls: 0.3643  loss_bbox: 0.3838
+2025/05/13 14:11:01 - mmengine - INFO - Epoch(train)  [9][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:16:59  time: 0.3372  data_time: 0.0013  memory: 3767  loss: 0.7378  loss_cls: 0.3574  loss_bbox: 0.3804
+2025/05/13 14:11:14 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:11:15 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:11:18 - mmengine - INFO - bbox_mAP_copypaste: 0.385 0.723 0.361 -1.000 0.244 0.409
+2025/05/13 14:11:18 - mmengine - INFO - Epoch(val) [9][10/10]    coco/bbox_mAP: 0.3850  coco/bbox_mAP_50: 0.7230  coco/bbox_mAP_75: 0.3610  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2440  coco/bbox_mAP_l: 0.4090  data_time: 0.0218  time: 0.1198
+2025/05/13 14:11:36 - mmengine - INFO - Epoch(train) [10][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:16:28  time: 0.3480  data_time: 0.0046  memory: 3801  loss: 0.7923  loss_cls: 0.4034  loss_bbox: 0.3889
+2025/05/13 14:11:53 - mmengine - INFO - Epoch(train) [10][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:16:11  time: 0.3389  data_time: 0.0012  memory: 3778  loss: 0.7546  loss_cls: 0.3792  loss_bbox: 0.3754
+2025/05/13 14:12:06 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:12:08 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:12:11 - mmengine - INFO - bbox_mAP_copypaste: 0.310 0.642 0.249 -1.000 0.194 0.333
+2025/05/13 14:12:11 - mmengine - INFO - Epoch(val) [10][10/10]    coco/bbox_mAP: 0.3100  coco/bbox_mAP_50: 0.6420  coco/bbox_mAP_75: 0.2490  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1940  coco/bbox_mAP_l: 0.3330  data_time: 0.0208  time: 0.1168
+2025/05/13 14:12:28 - mmengine - INFO - Epoch(train) [11][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:15:39  time: 0.3367  data_time: 0.0047  memory: 3783  loss: 0.7505  loss_cls: 0.3690  loss_bbox: 0.3815
+2025/05/13 14:12:44 - mmengine - INFO - Epoch(train) [11][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:15:22  time: 0.3326  data_time: 0.0013  memory: 3774  loss: 0.7906  loss_cls: 0.4068  loss_bbox: 0.3838
+2025/05/13 14:12:58 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:12:59 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:13:02 - mmengine - INFO - bbox_mAP_copypaste: 0.320 0.659 0.253 -1.000 0.182 0.347
+2025/05/13 14:13:02 - mmengine - INFO - Epoch(val) [11][10/10]    coco/bbox_mAP: 0.3200  coco/bbox_mAP_50: 0.6590  coco/bbox_mAP_75: 0.2530  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1820  coco/bbox_mAP_l: 0.3470  data_time: 0.0208  time: 0.1184
+2025/05/13 14:13:19 - mmengine - INFO - Epoch(train) [12][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:14:50  time: 0.3389  data_time: 0.0044  memory: 3796  loss: 0.7213  loss_cls: 0.3426  loss_bbox: 0.3787
+2025/05/13 14:13:35 - mmengine - INFO - Epoch(train) [12][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:14:32  time: 0.3301  data_time: 0.0013  memory: 3770  loss: 0.7213  loss_cls: 0.3410  loss_bbox: 0.3804
+2025/05/13 14:13:49 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:13:50 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:13:53 - mmengine - INFO - bbox_mAP_copypaste: 0.373 0.714 0.339 -1.000 0.286 0.398
+2025/05/13 14:13:53 - mmengine - INFO - Epoch(val) [12][10/10]    coco/bbox_mAP: 0.3730  coco/bbox_mAP_50: 0.7140  coco/bbox_mAP_75: 0.3390  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2860  coco/bbox_mAP_l: 0.3980  data_time: 0.0199  time: 0.1188
+2025/05/13 14:14:10 - mmengine - INFO - Epoch(train) [13][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:14:01  time: 0.3400  data_time: 0.0045  memory: 3802  loss: 0.7034  loss_cls: 0.3272  loss_bbox: 0.3762
+2025/05/13 14:14:27 - mmengine - INFO - Epoch(train) [13][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:13:44  time: 0.3345  data_time: 0.0013  memory: 3789  loss: 0.7089  loss_cls: 0.3353  loss_bbox: 0.3735
+2025/05/13 14:14:40 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:14:42 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:14:45 - mmengine - INFO - bbox_mAP_copypaste: 0.394 0.757 0.365 -1.000 0.276 0.417
+2025/05/13 14:14:45 - mmengine - INFO - Epoch(val) [13][10/10]    coco/bbox_mAP: 0.3940  coco/bbox_mAP_50: 0.7570  coco/bbox_mAP_75: 0.3650  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2760  coco/bbox_mAP_l: 0.4170  data_time: 0.0208  time: 0.1160
+2025/05/13 14:15:01 - mmengine - INFO - Epoch(train) [14][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:13:13  time: 0.3372  data_time: 0.0048  memory: 3788  loss: 0.7500  loss_cls: 0.3670  loss_bbox: 0.3830
+2025/05/13 14:15:18 - mmengine - INFO - Epoch(train) [14][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:12:56  time: 0.3349  data_time: 0.0013  memory: 3771  loss: 0.7737  loss_cls: 0.3820  loss_bbox: 0.3917
+2025/05/13 14:15:32 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:15:33 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:15:36 - mmengine - INFO - bbox_mAP_copypaste: 0.365 0.702 0.339 -1.000 0.267 0.391
+2025/05/13 14:15:36 - mmengine - INFO - Epoch(val) [14][10/10]    coco/bbox_mAP: 0.3650  coco/bbox_mAP_50: 0.7020  coco/bbox_mAP_75: 0.3390  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2670  coco/bbox_mAP_l: 0.3910  data_time: 0.0210  time: 0.1199
+2025/05/13 14:15:45 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:15:53 - mmengine - INFO - Epoch(train) [15][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:12:24  time: 0.3408  data_time: 0.0044  memory: 3790  loss: 0.7467  loss_cls: 0.3624  loss_bbox: 0.3843
+2025/05/13 14:16:09 - mmengine - INFO - Epoch(train) [15][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:12:07  time: 0.3287  data_time: 0.0013  memory: 3776  loss: 0.7509  loss_cls: 0.3645  loss_bbox: 0.3865
+2025/05/13 14:16:23 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:16:24 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:16:27 - mmengine - INFO - bbox_mAP_copypaste: 0.371 0.674 0.382 -1.000 0.223 0.406
+2025/05/13 14:16:27 - mmengine - INFO - Epoch(val) [15][10/10]    coco/bbox_mAP: 0.3710  coco/bbox_mAP_50: 0.6740  coco/bbox_mAP_75: 0.3820  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2230  coco/bbox_mAP_l: 0.4060  data_time: 0.0211  time: 0.1181
+2025/05/13 14:16:44 - mmengine - INFO - Epoch(train) [16][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:11:36  time: 0.3387  data_time: 0.0046  memory: 3793  loss: 0.7477  loss_cls: 0.3667  loss_bbox: 0.3810
+2025/05/13 14:17:01 - mmengine - INFO - Epoch(train) [16][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:11:19  time: 0.3300  data_time: 0.0013  memory: 3796  loss: 0.7425  loss_cls: 0.3559  loss_bbox: 0.3866
+2025/05/13 14:17:15 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:17:16 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:17:19 - mmengine - INFO - bbox_mAP_copypaste: 0.405 0.728 0.411 -1.000 0.248 0.432
+2025/05/13 14:17:19 - mmengine - INFO - Epoch(val) [16][10/10]    coco/bbox_mAP: 0.4050  coco/bbox_mAP_50: 0.7280  coco/bbox_mAP_75: 0.4110  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2480  coco/bbox_mAP_l: 0.4320  data_time: 0.0201  time: 0.1174
+2025/05/13 14:17:36 - mmengine - INFO - Epoch(train) [17][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:10:48  time: 0.3354  data_time: 0.0045  memory: 3773  loss: 0.7339  loss_cls: 0.3532  loss_bbox: 0.3807
+2025/05/13 14:17:52 - mmengine - INFO - Epoch(train) [17][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:10:31  time: 0.3317  data_time: 0.0012  memory: 3779  loss: 0.7127  loss_cls: 0.3382  loss_bbox: 0.3745
+2025/05/13 14:18:06 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:18:07 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:18:10 - mmengine - INFO - bbox_mAP_copypaste: 0.453 0.758 0.520 -1.000 0.272 0.483
+2025/05/13 14:18:10 - mmengine - INFO - Epoch(val) [17][10/10]    coco/bbox_mAP: 0.4530  coco/bbox_mAP_50: 0.7580  coco/bbox_mAP_75: 0.5200  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2720  coco/bbox_mAP_l: 0.4830  data_time: 0.0217  time: 0.1212
+2025/05/13 14:18:10 - mmengine - INFO - The previous best checkpoint D:\Repositories\test\25-05-09\rtmdet\best_coco_bbox_mAP_epoch_8.pth is removed
+2025/05/13 14:18:11 - mmengine - INFO - The best checkpoint with 0.4530 coco/bbox_mAP at 17 epoch is saved to best_coco_bbox_mAP_epoch_17.pth.
+2025/05/13 14:18:28 - mmengine - INFO - Epoch(train) [18][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:10:00  time: 0.3364  data_time: 0.0045  memory: 3770  loss: 0.7231  loss_cls: 0.3464  loss_bbox: 0.3767
+2025/05/13 14:18:45 - mmengine - INFO - Epoch(train) [18][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:09:43  time: 0.3300  data_time: 0.0012  memory: 3771  loss: 0.7198  loss_cls: 0.3452  loss_bbox: 0.3746
+2025/05/13 14:18:58 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:19:00 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:19:03 - mmengine - INFO - bbox_mAP_copypaste: 0.402 0.713 0.414 -1.000 0.277 0.425
+2025/05/13 14:19:03 - mmengine - INFO - Epoch(val) [18][10/10]    coco/bbox_mAP: 0.4020  coco/bbox_mAP_50: 0.7130  coco/bbox_mAP_75: 0.4140  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2770  coco/bbox_mAP_l: 0.4250  data_time: 0.0215  time: 0.1197
+2025/05/13 14:19:20 - mmengine - INFO - Epoch(train) [19][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:09:12  time: 0.3388  data_time: 0.0046  memory: 3793  loss: 0.7010  loss_cls: 0.3281  loss_bbox: 0.3729
+2025/05/13 14:19:36 - mmengine - INFO - Epoch(train) [19][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:08:56  time: 0.3350  data_time: 0.0013  memory: 3781  loss: 0.7131  loss_cls: 0.3341  loss_bbox: 0.3790
+2025/05/13 14:19:50 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:19:51 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:19:54 - mmengine - INFO - bbox_mAP_copypaste: 0.374 0.709 0.355 -1.000 0.247 0.397
+2025/05/13 14:19:54 - mmengine - INFO - Epoch(val) [19][10/10]    coco/bbox_mAP: 0.3740  coco/bbox_mAP_50: 0.7090  coco/bbox_mAP_75: 0.3550  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2470  coco/bbox_mAP_l: 0.3970  data_time: 0.0220  time: 0.1212
+2025/05/13 14:20:12 - mmengine - INFO - Epoch(train) [20][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:08:25  time: 0.3466  data_time: 0.0045  memory: 3788  loss: 0.7308  loss_cls: 0.3536  loss_bbox: 0.3772
+2025/05/13 14:20:28 - mmengine - INFO - Epoch(train) [20][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:08:08  time: 0.3319  data_time: 0.0012  memory: 3787  loss: 0.7100  loss_cls: 0.3332  loss_bbox: 0.3768
+2025/05/13 14:20:42 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:20:43 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:20:46 - mmengine - INFO - bbox_mAP_copypaste: 0.349 0.655 0.348 -1.000 0.220 0.382
+2025/05/13 14:20:46 - mmengine - INFO - Epoch(val) [20][10/10]    coco/bbox_mAP: 0.3490  coco/bbox_mAP_50: 0.6550  coco/bbox_mAP_75: 0.3480  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2200  coco/bbox_mAP_l: 0.3820  data_time: 0.0210  time: 0.1193
+2025/05/13 14:21:03 - mmengine - INFO - Epoch(train) [21][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:07:37  time: 0.3441  data_time: 0.0044  memory: 3804  loss: 0.7151  loss_cls: 0.3354  loss_bbox: 0.3797
+2025/05/13 14:21:20 - mmengine - INFO - Epoch(train) [21][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:07:20  time: 0.3301  data_time: 0.0014  memory: 3779  loss: 0.7447  loss_cls: 0.3649  loss_bbox: 0.3798
+2025/05/13 14:21:33 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:21:34 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:21:37 - mmengine - INFO - bbox_mAP_copypaste: 0.424 0.737 0.450 -1.000 0.236 0.455
+2025/05/13 14:21:37 - mmengine - INFO - Epoch(val) [21][10/10]    coco/bbox_mAP: 0.4240  coco/bbox_mAP_50: 0.7370  coco/bbox_mAP_75: 0.4500  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2360  coco/bbox_mAP_l: 0.4550  data_time: 0.0208  time: 0.1223
+2025/05/13 14:21:51 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:21:54 - mmengine - INFO - Epoch(train) [22][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:06:50  time: 0.3392  data_time: 0.0048  memory: 3794  loss: 0.7322  loss_cls: 0.3490  loss_bbox: 0.3831
+2025/05/13 14:22:11 - mmengine - INFO - Epoch(train) [22][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:06:33  time: 0.3297  data_time: 0.0013  memory: 3782  loss: 0.7457  loss_cls: 0.3596  loss_bbox: 0.3861
+2025/05/13 14:22:24 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:22:26 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:22:29 - mmengine - INFO - bbox_mAP_copypaste: 0.385 0.689 0.398 -1.000 0.255 0.413
+2025/05/13 14:22:29 - mmengine - INFO - Epoch(val) [22][10/10]    coco/bbox_mAP: 0.3850  coco/bbox_mAP_50: 0.6890  coco/bbox_mAP_75: 0.3980  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2550  coco/bbox_mAP_l: 0.4130  data_time: 0.0187  time: 0.1199
+2025/05/13 14:22:46 - mmengine - INFO - Epoch(train) [23][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:06:02  time: 0.3461  data_time: 0.0045  memory: 3779  loss: 0.7050  loss_cls: 0.3355  loss_bbox: 0.3695
+2025/05/13 14:23:03 - mmengine - INFO - Epoch(train) [23][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:05:45  time: 0.3341  data_time: 0.0014  memory: 3776  loss: 0.7281  loss_cls: 0.3462  loss_bbox: 0.3819
+2025/05/13 14:23:16 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:23:17 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:23:20 - mmengine - INFO - bbox_mAP_copypaste: 0.420 0.747 0.448 -1.000 0.259 0.449
+2025/05/13 14:23:20 - mmengine - INFO - Epoch(val) [23][10/10]    coco/bbox_mAP: 0.4200  coco/bbox_mAP_50: 0.7470  coco/bbox_mAP_75: 0.4480  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2590  coco/bbox_mAP_l: 0.4490  data_time: 0.0195  time: 0.1178
+2025/05/13 14:23:37 - mmengine - INFO - Epoch(train) [24][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:05:15  time: 0.3386  data_time: 0.0044  memory: 3778  loss: 0.7216  loss_cls: 0.3460  loss_bbox: 0.3757
+2025/05/13 14:23:54 - mmengine - INFO - Epoch(train) [24][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:04:58  time: 0.3344  data_time: 0.0012  memory: 3782  loss: 0.6976  loss_cls: 0.3241  loss_bbox: 0.3735
+2025/05/13 14:24:07 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:24:08 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:24:11 - mmengine - INFO - bbox_mAP_copypaste: 0.396 0.742 0.372 -1.000 0.280 0.420
+2025/05/13 14:24:11 - mmengine - INFO - Epoch(val) [24][10/10]    coco/bbox_mAP: 0.3960  coco/bbox_mAP_50: 0.7420  coco/bbox_mAP_75: 0.3720  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2800  coco/bbox_mAP_l: 0.4200  data_time: 0.0213  time: 0.1184
+2025/05/13 14:24:28 - mmengine - INFO - Epoch(train) [25][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:04:27  time: 0.3368  data_time: 0.0046  memory: 3765  loss: 0.7157  loss_cls: 0.3384  loss_bbox: 0.3772
+2025/05/13 14:24:45 - mmengine - INFO - Epoch(train) [25][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:04:10  time: 0.3276  data_time: 0.0013  memory: 3789  loss: 0.6991  loss_cls: 0.3238  loss_bbox: 0.3753
+2025/05/13 14:24:58 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:25:00 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:25:03 - mmengine - INFO - bbox_mAP_copypaste: 0.391 0.724 0.393 -1.000 0.279 0.415
+2025/05/13 14:25:03 - mmengine - INFO - Epoch(val) [25][10/10]    coco/bbox_mAP: 0.3910  coco/bbox_mAP_50: 0.7240  coco/bbox_mAP_75: 0.3930  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2790  coco/bbox_mAP_l: 0.4150  data_time: 0.0221  time: 0.1204
+2025/05/13 14:25:20 - mmengine - INFO - Epoch(train) [26][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:03:40  time: 0.3391  data_time: 0.0045  memory: 3789  loss: 0.7195  loss_cls: 0.3408  loss_bbox: 0.3787
+2025/05/13 14:25:36 - mmengine - INFO - Epoch(train) [26][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:03:23  time: 0.3320  data_time: 0.0014  memory: 3767  loss: 0.6852  loss_cls: 0.3195  loss_bbox: 0.3657
+2025/05/13 14:25:50 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:25:51 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:25:54 - mmengine - INFO - bbox_mAP_copypaste: 0.408 0.704 0.437 -1.000 0.262 0.437
+2025/05/13 14:25:54 - mmengine - INFO - Epoch(val) [26][10/10]    coco/bbox_mAP: 0.4080  coco/bbox_mAP_50: 0.7040  coco/bbox_mAP_75: 0.4370  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2620  coco/bbox_mAP_l: 0.4370  data_time: 0.0201  time: 0.1197
+2025/05/13 14:26:11 - mmengine - INFO - Epoch(train) [27][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:02:52  time: 0.3324  data_time: 0.0047  memory: 3777  loss: 0.7580  loss_cls: 0.3749  loss_bbox: 0.3831
+2025/05/13 14:26:28 - mmengine - INFO - Epoch(train) [27][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:02:35  time: 0.3378  data_time: 0.0013  memory: 3779  loss: 0.7208  loss_cls: 0.3346  loss_bbox: 0.3862
+2025/05/13 14:26:41 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:26:43 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:26:46 - mmengine - INFO - bbox_mAP_copypaste: 0.441 0.754 0.486 -1.000 0.294 0.464
+2025/05/13 14:26:46 - mmengine - INFO - Epoch(val) [27][10/10]    coco/bbox_mAP: 0.4410  coco/bbox_mAP_50: 0.7540  coco/bbox_mAP_75: 0.4860  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2940  coco/bbox_mAP_l: 0.4640  data_time: 0.0203  time: 0.1210
+2025/05/13 14:27:03 - mmengine - INFO - Epoch(train) [28][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:02:05  time: 0.3420  data_time: 0.0045  memory: 3797  loss: 0.8853  loss_cls: 0.4840  loss_bbox: 0.4012
+2025/05/13 14:27:19 - mmengine - INFO - Epoch(train) [28][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:01:48  time: 0.3290  data_time: 0.0013  memory: 3765  loss: 0.7923  loss_cls: 0.4030  loss_bbox: 0.3893
+2025/05/13 14:27:33 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:27:34 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:27:37 - mmengine - INFO - bbox_mAP_copypaste: 0.409 0.730 0.430 -1.000 0.268 0.439
+2025/05/13 14:27:37 - mmengine - INFO - Epoch(val) [28][10/10]    coco/bbox_mAP: 0.4090  coco/bbox_mAP_50: 0.7300  coco/bbox_mAP_75: 0.4300  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2680  coco/bbox_mAP_l: 0.4390  data_time: 0.0199  time: 0.1167
+2025/05/13 14:27:55 - mmengine - INFO - Epoch(train) [29][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:01:17  time: 0.3463  data_time: 0.0044  memory: 3796  loss: 0.7386  loss_cls: 0.3572  loss_bbox: 0.3814
+2025/05/13 14:27:55 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:28:11 - mmengine - INFO - Epoch(train) [29][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:01:01  time: 0.3377  data_time: 0.0012  memory: 3768  loss: 0.7243  loss_cls: 0.3464  loss_bbox: 0.3779
+2025/05/13 14:28:25 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:28:26 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:28:29 - mmengine - INFO - bbox_mAP_copypaste: 0.387 0.696 0.399 -1.000 0.243 0.417
+2025/05/13 14:28:29 - mmengine - INFO - Epoch(val) [29][10/10]    coco/bbox_mAP: 0.3870  coco/bbox_mAP_50: 0.6960  coco/bbox_mAP_75: 0.3990  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2430  coco/bbox_mAP_l: 0.4170  data_time: 0.0208  time: 0.1193
+2025/05/13 14:28:46 - mmengine - INFO - Epoch(train) [30][ 50/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:00:30  time: 0.3446  data_time: 0.0043  memory: 3789  loss: 0.7418  loss_cls: 0.3553  loss_bbox: 0.3866
+2025/05/13 14:29:03 - mmengine - INFO - Epoch(train) [30][100/141]  base_lr: 4.0000e-03 lr: 4.0000e-03  eta: 0:00:13  time: 0.3360  data_time: 0.0013  memory: 3797  loss: 0.6963  loss_cls: 0.3253  loss_bbox: 0.3710
+2025/05/13 14:29:16 - mmengine - INFO - Exp name: rtmdet_pt_pmd_aff_20250513_140237
+2025/05/13 14:29:16 - mmengine - INFO - Saving checkpoint at 30 epochs
+2025/05/13 14:29:20 - mmengine - INFO - Evaluating bbox...
+2025/05/13 14:29:23 - mmengine - INFO - bbox_mAP_copypaste: 0.391 0.718 0.391 -1.000 0.221 0.420
+2025/05/13 14:29:23 - mmengine - INFO - Epoch(val) [30][10/10]    coco/bbox_mAP: 0.3910  coco/bbox_mAP_50: 0.7180  coco/bbox_mAP_75: 0.3910  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2210  coco/bbox_mAP_l: 0.4200  data_time: 0.0204  time: 0.1322
